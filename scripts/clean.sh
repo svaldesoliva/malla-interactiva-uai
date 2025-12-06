@@ -1,1 +1,3 @@
+#!/bin/bash
+
 rm ./js/min*.js ./*.ico ./*.JPG ./*.png ./*.svg

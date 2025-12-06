@@ -1,0 +1,70 @@
+{
+	"s1": [
+		["Civilización Contemporánea I", "CORE101", 0, "NA", []],
+		["Escritura Argumentativa", "CORE103", 0, "NA", []],
+		["Programación", "TICS100", 0, "NA", []],
+		["Cálculo Diferencial", "MAT105", 0, "NA", []],
+		["Álgebra", "MAT109", 0, "NA", []],
+		["Educación Física I", "GYM101", 0, "NA", []]
+	],
+	"s2": [
+		["Civilización Contemporánea II", "CORE102", 0, "NA", []],
+		["Álgebra Lineal", "MAT113", 0, "NA", ["MAT109"]],
+		["Física I", "FIS101", 0, "NA", ["MAT105"]],
+		["Cálculo Integral", "MAT106", 0, "NA", ["MAT105"]],
+		["Taller de Introducción a la Ingeniería", "TEI101", 0, "NA", []],
+		["Educación Física II", "GYM102", 0, "NA", []]
+	],
+	"s3": [
+		["Literatura y Humanidades I", "CORE201", 0, "NA", ["CORE102"]],
+		["Probabilidad y Estadística", "EST211", 0, "NA", ["MAT106"]],
+		["Física II", "FIS201", 0, "NA", ["MAT106", "FIS101"]],
+		["Cálculo Multivariables", "MAT203", 0, "NA", ["MAT106"]],
+		["Fundamentos de Ciencias Ambientales", "ING116", 0, "NA", []],
+		["Taller de Expresión Oral I", "LING111", 0, "NA", []],
+		["Educación Física III", "GYM103", 0, "NA", []]
+	],
+	"s4": [
+		["Literatura y Humanidades II", "CORE202", 0, "NA", ["CORE102"]],
+		["Fundamentos de Ciencia de Datos", "TICS314", 0, "NA", ["TICS100"]],
+		["Física III", "FIS301", 0, "NA", ["MAT203", "FIS201"]],
+		["Ecuaciones Diferenciales", "MAT208", 0, "NA", ["MAT203"]],
+		["Taller de Diseño e Ingeniería", "TEI201", 0, "NA", ["TEI101"]],
+		["Educación Física IV", "GYM104", 0, "NA", []],
+		["Práctica Profesional Operaria", "PPO101", 0, "NA", []]
+	],
+	"s5": [
+		["Core Ciencias", "CORE302", 0, "NA", ["CORE102"]],
+		["Minería de Datos", "TICS411", 0, "NA", ["TICS314"]],
+		["Lenguajes y Paradigmas de Programación", "TICS200", 0, "NA", ["TICS100"]],
+		["Estructura de Datos y Algoritmos", "TICS311", 0, "NA", ["TICS100", "MAT113"]],
+		["Bases de Datos", "TICS320", 0, "NA", ["TICS100", "MAT113"]],
+		["Optimización", "ING200", 0, "NA", ["MAT203"]],
+		["Educación Física V", "GYM105", 0, "NA", []]
+	],
+	"s6": [
+		["Core Ética", "CORE301", 0, "NA", ["CORE102"]],
+		["Inteligencia Artificial", "TICS315", 0, "NA", ["TICS411"]],
+		["Diseño de Software", "TICS316", 0, "NA", ["TICS200"]],
+		["Redes de Computadores", "TICS313", 0, "NA", ["TICS100", "EST211"]],
+		["Principios de Economía", "ECO110", 0, "NA", ["ING200"]],
+		["Taller de Innovación y Emprendimiento", "TEI301", 0, "NA", ["TEI201"]],
+		["Educación Física VI", "GYM106", 0, "NA", []]
+	],
+	"s7": [
+		["Core Arte y Humanidades", "CORE304", 0, "NA", ["CORE202"]],
+		["Sistemas de Información", "TICS304", 0, "NA", ["TICS100"]],
+		["Arquitectura de Software", "TICS317", 0, "NA", ["TICS320"]],
+		["Formulación y Evaluación de Proyectos", "ECO216", 0, "NA", ["ECO110"]],
+		["Taller de Expresión Oral II", "LING112", 0, "NA", ["LING111"]],
+		["Ingeniería de Software", "TICS331", 0, "NA", ["TICS200"]],
+	],
+	"s8": [
+		["Seguridad en TI", "TICS413", 0, "NA", ["TICS304"]],
+		["Arquitectura Cloud", "TICS400", 0, "NA", ["TICS317", "TICS313"]],
+		["Sistemas Operativos", "TICS312", 0, "NA", ["TICS311"]],
+		["Capstone Project", "TEI401", 0, "NA", ["TEI301"]],
+		["Liderazgo", "LID100", 0, "NA", []],
+		["Programación Profesional", "TICS420", 0, "NA", ["TICS200"]]
+	]
+}

@@ -1,7 +1,7 @@
 {
-  "name": "malla-interactiva",
-  "version": "1.5.3",
-  "description": "Proyecto Universitario en donde se mantiene una plataforma web que facilita información sobre las mallas en la Universidad.",
+  "name": "malla-interactiva-uai",
+  "version": "2.0.0",
+  "description": "Adaptación de la malla interactiva para la Universidad Adolfo Ibáñez.",
   "main": "index.html",
   "devDependencies": {
     "browser-sync": "^2.26.13",
@@ -19,18 +19,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/booterman98/malla-interactiva.git"
+    "url": "git+https://github.com/svaldes/malla-interactiva-uai.git"
   },
   "keywords": [
-    "USM",
-    "UTFSM",
+    "UAI",
     "malla",
     "interactiva"
   ],
-  "author": "César Paulangelo",
+  "author": "svaldes",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/BooterMan98/malla-interactiva/issues"
+    "url": "https://github.com/svaldes/malla-interactiva-uai/issues"
   },
-  "homepage": "https://github.com/BooterMan98/malla-interactiva"
+  "homepage": "https://github.com/svaldes/malla-interactiva-uai"
 }

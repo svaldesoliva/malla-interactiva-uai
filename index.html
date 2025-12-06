@@ -1,38 +1,21 @@
 <!DOCTYPE html>
 <html lang="es-cl">
 <head>
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-EY2REP8T30"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-EY2REP8T30');
-</script>
-  <!-- Google Tag Manager -->
-  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-M5LWCHD');</script>
-    <!-- End Google Tag Manager -->
-
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="initial-scale=1, viewport-fit=auto">
 
   <!-- Primary Meta Tags -->
-  <title>Malla interactiva</title>
-  <meta name="title" content="Malla interactiva">
-  <meta name="description" content="Visualiza y planifica tu carrera en la USM">
+  <title>Malla interactiva UAI</title>
+  <meta name="title" content="Malla interactiva UAI">
+  <meta name="description" content="Visualiza y planifica tu carrera en la UAI">
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://booterman98.github.io/malla-interactiva/">
-  <meta property="og:title" content="Malla interactiva">
-  <meta property="og:description" content="Visualiza y planifica tu carrera en la USM">
-  <meta property="og:image" content="https://booterman98.github.io/malla-interactiva/social-image.png">
+  <meta property="og:url" content="https://svaldes.github.io/malla-interactiva-uai/">
+  <meta property="og:title" content="Malla interactiva UAI">
+  <meta property="og:description" content="Visualiza y planifica tu carrera en la UAI">
+  <meta property="og:image" content="https://svaldes.github.io/malla-interactiva-uai/social-image.png">
 
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
@@ -114,7 +97,7 @@
         <h5>Mostrando créditos <span id="credits-system"></span><br>Créditos aprobados: <span id='credits'></span>
           (<span id="credPercentage"></span>%), Total ramos: <span id="ramoPercentage"></span>%</h5>
         <button type="button" id="cleanApprovedButton" class="mt-2 btn btn-secondary">Limpiar ramos aprobados</button>
-        <button id="credit-system" type="button" onclick="changeCreditsSystem()" class="mt-2 btn btn-info"> Cambiar sistema de créditos </button>
+        <button id="credit-system" type="button" onclick="toggleCredits()" class="mt-2 btn btn-info"> Ocultar créditos </button>
       </div>
       <div class="col-12 order-xl-5 my-3 text-center">
         <button type="button" class="btn btn-primary" id="loadfile" >Cargar Malla compartida</button>
