@@ -1,14 +1,14 @@
 {
-	"CORE": ["#2E58A7", "Formación General"],
-	"MAT": ["#00838F", "Matemáticas"],
-	"FIS": ["#991B1E", "Física"],
-	"TICS": ["#FF8000", "Tecnologías de Información"],
-	"ING": ["#6BA8D1", "Ingeniería"],
-	"ECO": ["#00AD5D", "Economía"],
-	"GYM": ["#B0B91D", "Educación Física"],
-	"TEI": ["#F78E1E", "Talleres de Ingeniería"],
-	"EST": ["#C54B73", "Estadística"],
-	"LING": ["#D4AF37", "Lenguaje"],
-	"LID": ["#8B4513", "Liderazgo"],
-	"PPO": ["#808080", "Práctica Profesional"]
+"CORE": ["#685298", "Core Curriculum Artes Liberales"],
+"MAT": ["#162b4e", "Matemáticas"],
+"FIS": ["#162b4e", "Física"],
+"EST": ["#162b4e", "Estadística"],
+"ING": ["#162b4e", "Ingeniería General"],
+"TICS": ["#58b3dc", "Tecnologías e Informática"],
+"ECO": ["#2a64ab", "Economía y Negocios"],
+"TEI": ["#162b4e", "Talleres de Ingeniería"],
+"GYM": ["#706f6f", "Educación Física"],
+"LING": ["#706f6f", "Comunicación"],
+"LID": ["#706f6f", "Liderazgo"],
+"PPO": ["#706f6f", "Práctica Profesional"]
 }
