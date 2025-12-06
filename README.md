@@ -67,7 +67,7 @@ para abrir `data_ICI.json` debería quedar algo como `http://localhost:8000/inde
 Con *NPM* instalado en el equipo, ejecute desde una terminal en la carpeta raíz de el repo
 ```shell
 npm install
-npx browser-sync -w
+npm start
 ```
 Ejecutado lo anterior, se tendrá en su explorador favorito una
 versión local de la página. La dirección por defecto es `http://localhost:3000`
