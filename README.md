@@ -55,11 +55,16 @@ En donde
 Adicionalmente, se debe tener un archivo `colors_CARR.json` que contiene los colores para cada categoría en formato hexadecimal.
 
 ## Probar malla 
-Con *NPM* instalado en el equipo, ejecute desde una terminal en la carpeta raíz de el repo
-```shell
+Primero clonar el repositorio:
+```bash
+git clone https://github.com/svaldesoliva/malla-interactiva-uai.git
+cd malla-interactiva-uai
+```
+Con *npm* instalado en el equipo, ejecutar en una terminal los siguientes comandos:
+```bash
 npm install
 npm start
 ```
-Ejecutado lo anterior, se tendrá en su explorador una versión local de la página. La dirección por defecto es `http://localhost:3000`
+Luego, se debería ejecutar una instancia local de la página en `http://localhost:3000`
 
 ---
