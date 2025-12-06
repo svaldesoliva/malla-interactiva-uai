@@ -1,14 +1,7 @@
 {
 "CORE": ["#685298", "Core Curriculum Artes Liberales"],
-"MAT": ["#162b4e", "Matemáticas"],
-"FIS": ["#162b4e", "Física"],
-"EST": ["#162b4e", "Estadística"],
-"ING": ["#162b4e", "Ingeniería General"],
-"TICS": ["#58b3dc", "Tecnologías e Informática"],
-"ECO": ["#2a64ab", "Economía y Negocios"],
-"TEI": ["#162b4e", "Talleres de Ingeniería"],
-"GYM": ["#706f6f", "Educación Física"],
-"LING": ["#706f6f", "Comunicación"],
-"LID": ["#706f6f", "Liderazgo"],
-"PPO": ["#706f6f", "Práctica Profesional"]
+"PC": ["#162b4e", "Plan Común de Ingeniería y Ciencias"],
+"DS": ["#58b3dc", "Data Science"],
+"TICS": ["#06402b", "Informática"],
+"AC": ["#706f6f", "Asignaturas Complementarias UAI"]
 }
