@@ -2,5 +2,9 @@
   {
     "Nombre": "Ingeniería Civil en Informática",
     "Link": "ICInf"
+  },
+  {
+    "Nombre": "Ingeniería Civil Metalúrgica",
+    "Link": "MET"
   }
 ]

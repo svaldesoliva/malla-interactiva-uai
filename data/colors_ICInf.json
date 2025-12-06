@@ -1,3 +1,14 @@
 {
-  "NA": ["#2e58a7", "Sin categoría"]
+	"CORE": ["#2E58A7", "Formación General"],
+	"MAT": ["#00838F", "Matemáticas"],
+	"FIS": ["#991B1E", "Física"],
+	"TICS": ["#FF8000", "Tecnologías de Información"],
+	"ING": ["#6BA8D1", "Ingeniería"],
+	"ECO": ["#00AD5D", "Economía"],
+	"GYM": ["#B0B91D", "Educación Física"],
+	"TEI": ["#F78E1E", "Talleres de Ingeniería"],
+	"EST": ["#C54B73", "Estadística"],
+	"LING": ["#D4AF37", "Lenguaje"],
+	"LID": ["#8B4513", "Liderazgo"],
+	"PPO": ["#808080", "Práctica Profesional"]
 }
