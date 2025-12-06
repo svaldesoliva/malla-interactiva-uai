@@ -1,3 +1,3 @@
 #!/bin/bash
 
-rm ./js/min*.js ./*.ico ./*.JPG ./*.png ./*.svg
+rm -f ./js/min*.js ./js/init.js ./*.ico ./*.JPG ./*.png ./*.svg
