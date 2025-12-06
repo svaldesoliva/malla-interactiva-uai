@@ -3,7 +3,11 @@ set -e  # Exit on error
 
 # Decompress .gz JavaScript files if they don't exist or are older than the .gz files
 
-cd "$(dirname "$0")/.." || exit 1
+# Get the script directory and navigate to project root
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+
+cd "$PROJECT_ROOT" || exit 1
 
 # Enable nullglob to handle case where no .gz files exist
 shopt -s nullglob
