@@ -14,6 +14,7 @@
     "gbpages": "./scripts/minify_GBPages.sh",
     "clean": "npm prune --production",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "prestart": "bash ./scripts/decompress.sh",
     "start": "browser-sync -w",
     "cleanDev": "./scripts/clean.sh"
   },
