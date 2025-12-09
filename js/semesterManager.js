@@ -64,13 +64,19 @@ class SemesterManager {
         }
     }
 
-    // elimina la asignatura de semestres guardados, sin contar el semestre actual
+    /**
+     * Removes a subject from all saved semesters except the current one
+     * Used when a subject needs to be completely removed from the plan
+     * If the subject was in a previous semester, marks it as approved to update prerequisite status
+     */
     removeSubjectOutsideSemester(subject) {
         Object.keys(this.selectedPerSemester).forEach(semester => {
             if (semester !== this.semester) {
                 let found = this.selectedPerSemester[semester].indexOf(subject)
                 if (found !== -1){
                     this.selectedPerSemester[semester].splice(found,1)
+                    // If subject was taken in a previous semester, mark as approved
+                    // This affects whether other subjects that require it can be taken
                     if (semester < this.semester)
                         subject.approveRamo()
                 }

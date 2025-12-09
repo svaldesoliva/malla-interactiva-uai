@@ -54,23 +54,32 @@ class Priorix extends SemesterManager {
 
     }
 
-    // elimina todo rastro del ramo a elimnar y vuelve a calclular la prioridad
+    /**
+     * Removes a subject that was added in a different semester and recalculates priority
+     * Updates credit totals and grade-weighted scores for all affected semesters
+     * This is complex because it needs to backtrack and update historical semester data
+     */
     removeSubjectOutsideSemester(subject) {
         Object.keys(this.selectedPerSemester).forEach(semester => {
+            // Only process semesters other than the current one
             if (semester !== this.semester) {
                 let found = this.selectedPerSemester[semester].indexOf(subject)
                 if (found !== -1){
                     this.selectedPerSemester[semester].splice(found,1)
+                    // If subject was from a previous semester, need to update all accumulated data
                     if (semester < this.semester) {
                         subject.approveRamo()
                         this.totalCredits["USM"] -= subject.getUSMCredits()
                         this.totalCredits["SCT"] -= subject.getSCTCredits()
 
+                        // Calculate the grade-weighted score that needs to be removed
                         let grade = this.subjectGrades[semester][subject.sigla]
                         let scoreToDeleteUSM = grade * subject.getUSMCredits()
                         let scoreToDeleteSCT = grade * subject.getSCTCredits()
                         delete this.subjectGrades[semester][subject.sigla]
+                        // Update cumulative scores for all semesters from removal point to current
                         for (semester; semester < this.semester; semester++) {
+                            // Only count towards approved credits if grade was passing (>54)
                             if (grade > 54) {
                                 this.totalApprovedCredits["USM"][semester] -= subject.getUSMCredits()
                                 this.totalApprovedCredits["SCT"][semester] -= subject.getSCTCredits()

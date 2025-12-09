@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Question or Discussion
+    url: https://github.com/svaldesoliva/malla-interactiva-uai/discussions
+    about: For questions and general discussions, please use GitHub Discussions

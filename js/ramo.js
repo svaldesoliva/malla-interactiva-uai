@@ -20,12 +20,13 @@ class Ramo {
 
 
     constructor(name, sigla, credits, category, prer = [], id, malla, creditsSCT = 0, isCustom = false, dictatesIn="") {
-        // Propiedades del ramo
+        // Core subject properties
         this.name = name;
         this.sigla = sigla;
         this.credits = credits;
         this.category = category;
         this.prer = new Set(prer);
+        // Handle SCT credits: use provided value or calculate from USM credits (1 USM ≈ 1.67 SCT)
         if (creditsSCT){
             this.creditsSCT = creditsSCT
             this.USMtoSCT = false
@@ -33,9 +34,10 @@ class Ramo {
             this.creditsSCT = Math.round(credits * 5 / 3)
             this.USMtoSCT = true
         }
+        // dictatesIn: "P" = even semesters (pares), "I" = odd semesters (impares), "" = both
         this.dictatesIn = dictatesIn
 
-        // Propiedades para renderizado e interacciones
+        // Rendering and interaction properties
         this.malla = malla
         this.isCustom = isCustom
         this.beenEdited= false
@@ -207,19 +209,21 @@ class Ramo {
             .attr('font-size', 10)
             .text(this.id);
 
-        // prerr circles!
+        // Prerequisite indicator circles - shows which subjects must be completed first
         let c_x = 0;
         this.prer.forEach((p) => {
             let r = 9,
                 fontsize = 10,
                 variantX = 5;
             let variantY = 5;
+            // Adjust size for smaller scale factors to prevent overlap
             if (scaleX < 0.83) {
                 r--;
                 fontsize--;
                 variantX = 1;
                 variantY--;
             }
+            // Use the same color as the prerequisite subject's category for visual connection
             let prerColor = this.malla.categories[this.malla.ALLSUBJECTS[p].category][0]
             this.ramo.append("circle")
                 .attr('cx', posX + r + c_x + variantX)
@@ -240,6 +244,7 @@ class Ramo {
                         return "white";
                     return '#222222';
                 });
+            // Move position for next circle horizontally
             c_x += r * 2;
         });
         this.createActionListeners();

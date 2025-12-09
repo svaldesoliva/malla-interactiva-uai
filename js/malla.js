@@ -53,9 +53,16 @@ class Malla {
         this.saveEnabled = true
     }
 
-    // Obtiene los datos de la carrera y retorna una promesa para cuando los datos se hayan conseguido y
-    // las propiedades estén listas
+    /**
+     * Loads career data and returns a promise when data is fetched and properties are ready
+     * Checks for shared malla data in localStorage first, otherwise fetches from JSON files
+     * @param {string} carr - Career identifier code
+     * @param {string} fullCareerName - Full display name of the career
+     * @param {string} relaPath - Relative path to data files
+     * @returns {Promise} Promise that resolves when malla data is loaded
+     */
     setCareer(carr, fullCareerName, relaPath) {
+        // Check if there's a shared malla saved in localStorage (e.g., from URL sharing)
         if (localStorage["sharedMalla"] != undefined) {
             let unparsedData = localStorage["sharedMalla"]
             localStorage.removeItem("sharedMalla")
@@ -67,18 +74,24 @@ class Malla {
             return Promise.resolve(this.setMallaAndCategories(data.malla, data.categories))
 
         } else {
+            // Load from JSON files: data file contains subjects, colors file contains categories
             this.currentMalla = carr;
             this.fullCareerName = fullCareerName
             let promises = [];
     
             promises.push(d3.json( relaPath + "data/data_" + this.currentMalla + ".json"));
             promises.push(d3.json( relaPath + "data/colors_" + this.currentMalla + ".json"));
+            // Wait for both files to load, then initialize malla with the data
             return Promise.all(promises).then(values => {this.setMallaAndCategories(values[0], values[1])})
 
         }
     }
 
-    // Define los datos de la malla y propiedades
+    /**
+     * Initializes malla data structure from JSON and creates subject instances
+     * Processes subjects for each semester, handling both old and new data formats
+     * Calculates total credits, subjects, and finds the longest semester
+     */
     setMallaAndCategories(malla, categories) {
         let semester;
         let longest_semester = 0;
@@ -88,20 +101,22 @@ class Malla {
         this.rawMalla = malla;
         this.categories = categories;
 
+        // Iterate through each semester and instantiate subject objects
         for (semester in this.rawMalla) {
             this.malla[semester] = {};
 
+            // Track the semester with the most subjects for rendering height
             if (malla[semester].length > longest_semester)
                 longest_semester = malla[semester].length;
             malla[semester].forEach(subject => {
                 // Se instancia el ramo y se agrega a la malla en su semestre
                 totalRamos += 1;
-                // Agregado de ramos por semestre
+                // Handle different data formats: new format includes SCT credits and dictatesIn info
                 if (subject.length === 7) {
-                    // Nuevo formato con ramos SCT
+                    // New format: [name, code, USMcredits, SCTcredits, category, prerequisites, dictatesIn]
                     this.malla[semester][subject[1]] = new this.subjectType(subject[0], subject[1], subject[2], subject[4], subject[5],this.SUBJECTID++, this, subject[3], false ,subject[6])
                 } else {
-                    // Formato antiguo
+                    // Old format: [name, code, credits, category, prerequisites?]
                     this.malla[semester][subject[1]] = new this.subjectType(subject[0], subject[1], subject[2], subject[3], (function hasPrer() {
                         if (subject.length > 4) {
                             return subject[4];
@@ -109,7 +124,7 @@ class Malla {
                         return [];
                     })(), this.SUBJECTID++, this);
                 }
-                // Se agrega el ramo a la lista de asignaturas
+                // Add subject to global subjects registry for easy lookup by code
                 this.ALLSUBJECTS[subject[1]] = this.malla[semester][subject[1]];
                 totalCredits += this.malla[semester][subject[1]].getDisplayCredits()
             });
@@ -130,10 +145,13 @@ class Malla {
         this.ALLSUBJECTS[subject.sigla] = subject
     }
 
-    // Elimina ramos de la malla y todo rastro de ellos
+    /**
+     * Removes a subject from the malla and cleans up all references to it
+     * Removes the subject from prerequisites of other subjects and updates their state
+     */
     delSubjects(subject) {
         Object.values(this.ALLSUBJECTS).forEach(otherSubject => {
-            // Elimina el ramo como prerrequisito de otros
+            // Remove this subject from the prerequisites list of any subjects that require it
             if (otherSubject.prer.has(subject.sigla)){
                 otherSubject.prer.delete(subject.sigla)
                 otherSubject.verifyPrer()

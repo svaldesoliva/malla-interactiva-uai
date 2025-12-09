@@ -4,6 +4,11 @@ class Generator extends SemesterManager {
         this.mallaEditor = new MallaEditor(this, "#unoficialSubjects", "#sectors")
     }
 
+    /**
+     * Displays a subject in the UI with semester-specific warnings
+     * Checks if subject is normally offered in the current semester type (odd/even)
+     * and displays warning messages if there's a mismatch
+     */
     displaySubject(subject) {
         if (subject.approved) {
             subject.showWarning()
@@ -25,7 +30,9 @@ class Generator extends SemesterManager {
             left.append("p")
                 .classed("my-0", true)
                 .text(subject.name);
+            // Check semester parity: odd semesters are typically 1st semester, even are 2nd semester
             let isOdd = Boolean(this.semester % 2)
+            // Warn if subject is normally offered in different semester type
             if (isOdd && subject.dictatesIn === "P")
                 left.append("p").attr("id","dictatesIn-" + subject.sigla).style("line-height", 1).classed("my-0", true).append("small")
                     .classed("text-center my-0 text-danger", true)

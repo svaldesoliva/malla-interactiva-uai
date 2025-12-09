@@ -1,12 +1,54 @@
 # MacOS and IDE related files
+.DS_Store
 */*.DS_Store
 .idea/
+.vscode/
+*.swp
+*.swo
+*~
+
 # npm modules
+node_modules/
 **/node_modules/
+
+# Build artifacts
+/js/min*.js
+/js/init.js
+*.min.js
+*.min.css
+
 # Assets while developing / building
 /*.png
 /*.svg
 /*.ico
 /*.jpg
-/js/min*.js
-/js/init.js
+
+# Compressed files
+*.gz
+*.zip
+*.tar
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Testing
+coverage/
+.nyc_output/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Package manager locks (keep package-lock.json but ignore others)
+yarn.lock
+pnpm-lock.yaml

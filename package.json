@@ -6,6 +6,7 @@
   "devDependencies": {
     "browser-sync": "^2.26.13",
     "csso-cli": "^3.0.0",
+    "eslint": "^8.57.1",
     "terser": "^5.5.1"
   },
   "scripts": {
@@ -16,7 +17,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "prestart": "node ./scripts/decompress.js",
     "start": "browser-sync -w",
-    "cleanDev": "./scripts/clean.sh"
+    "cleanDev": "./scripts/clean.sh",
+    "lint": "eslint js/**/*.js --ignore-pattern 'js/min*.js' --ignore-pattern 'js/init.js'",
+    "lint:fix": "eslint js/**/*.js --ignore-pattern 'js/min*.js' --ignore-pattern 'js/init.js' --fix"
   },
   "repository": {
     "type": "git",
