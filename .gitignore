@@ -17,12 +17,6 @@ node_modules/
 *.min.js
 *.min.css
 
-# Assets while developing / building
-/*.png
-/*.svg
-/*.ico
-/*.jpg
-
 # Compressed files
 *.gz
 *.zip

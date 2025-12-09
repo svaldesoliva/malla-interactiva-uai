@@ -46,7 +46,9 @@ module.exports = {
         "Malla": "readonly",
         "Ramo": "readonly",
         "SelectableRamo": "readonly",
-        "SemesterManager": "readonly"
+        "SemesterManager": "readonly",
+        "workbox": "readonly",
+        "importScripts": "readonly"
     },
     "ignorePatterns": [
         "node_modules/",

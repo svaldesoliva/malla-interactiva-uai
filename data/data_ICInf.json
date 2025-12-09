@@ -13,7 +13,6 @@
 		["Cálculo Integral", "MAT106", 4, 6, "PC", ["MAT105"], "A"],
 		["Taller de Introducción a la Ingeniería", "TEI101", 2, 4, "PC", [], "A"],
 		["Álgebra Lineal", "MAT113", 4, 6, "DS", ["MAT109"], "A"],
-
 		["Educación Física II", "GYM102", 1, 1, "AC", [], "A"]
 	],
 	"s3": [
