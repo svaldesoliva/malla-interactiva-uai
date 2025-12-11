@@ -11,9 +11,7 @@ Adaptación del visualizador de mallas interactivo para la Universidad Adolfo Ib
 
 
 # To-Do
-- [ ] Simplificar proyecto, reestructurar carpetas.
-- [ ] Eliminar cosas no relacionadas con la UAI 
-  - [ ] Agregar logo institucional(?)
+- [ ] Agregar logo institucional(?)
 - [ ] Agregar más carreras
   - [ ] Google Forms para que usuarios suban capturas de Intranet>Plan de Estudios
   - [ ] Script en python para generar archivos de mallas
@@ -22,10 +20,10 @@ Adaptación del visualizador de mallas interactivo para la Universidad Adolfo Ib
 
 
 # Características de la malla
-- Visualiza los créditos de las asignaturas.
-- Selecciona asignaturas para aprobarlas, a medida que vayas aprobando más ramos, podrás ver que ramos se desbloquean.
-- Calcula tu ICA *en progreso*.
-- Modo oscuro y modo claro automático basado en la configuración del OS
+- Visualiza los créditos de las asignaturas en formato SCT.
+- Selecciona asignaturas para aprobarlas, a medida que vayas aprobando más ramos, podrás ver qué ramos se desbloquean.
+- Guarda tu progreso automáticamente en el navegador.
+- Modo oscuro y modo claro automático basado en la configuración del OS.
 
 ## ¿Cómo funciona la malla?
 

@@ -33,22 +33,8 @@ function render(props) {
     };
 }
 let relaPath = './'
-let prioridad = document.URL.includes('prioridad')
-let personalizar = document.URL.includes('personalizar')
-let mallaPersonal = document.URL.includes("malla.")
-let contact = document.URL.includes("contact")
 let fullCareerName = ""
 let texts = "Malla"
-if (mallaPersonal)
-    texts = "Personal"
-else if (prioridad)
-    texts = "Prioridad"
-else if (personalizar)
-    texts = "Generadora"
-
-if (texts !== "Malla" || contact) {
-    relaPath = '../'
-}
 // Disabled due to safari bug
 /*if ('serviceWorker' in navigator) {
     console.log("Service worker compatible")
@@ -119,25 +105,6 @@ if (params.get('SCT') === "false")
         welcomeTexts = datas.pop()[texts]
 
         let home = document.getElementById("goToHome")
-        let calculator = document.getElementById("goToCalculator")
-        let generator = document.getElementById("goToGenerator")
-        let goToContact = document.getElementById("contact")
-        if (!mallaPersonal) {
-            if (!prioridad)
-                calculator.setAttribute("href", relaPath + 'prioridad/?m=' + carr)
-            else
-                calculator.classList.add("active")
-            if (!personalizar)
-                generator.setAttribute("href", relaPath + 'personalizar/?m=' + carr)
-            else {
-                generator.classList.add("active")
-                document.getElementById("generate").setAttribute("href", "./malla.html?m=" + carr)
-            }
-        } else
-            generator.setAttribute("href", relaPath + 'personalizar/?m=' + carr)
-        if (contact)
-            goToContact.classList.add("active")
-        goToContact.setAttribute("href", relaPath + "contact/")
         home.setAttribute("href", relaPath + '?m=' + carr)
         return fetch(relaPath + '/data/carreras.json')
     }).then(response => response.json()).then((careers,) => {
@@ -153,15 +120,10 @@ if (params.get('SCT') === "false")
                     fullCareerName = career["Nombre"]
                     welcomeTexts["welcomeTitle"] = welcomeTexts["welcomeTitle"].replace("CARRERA", career['Nombre'])
                     $('.carrera').text(career['Nombre'])
-                    if (mallaPersonal) {
-                     let title = document.title
-                     document.title = title + " basada en " + career['Nombre']
-                    } else {
-                        let title = document.title.slice(0, 17)
-                        title += " " + career['Nombre']
-                        title += document.title.slice(17)
-                        document.title = title
-                    }
+                    let title = document.title.slice(0, 17)
+                    title += " " + career['Nombre']
+                    title += document.title.slice(17)
+                    document.title = title
                 }
             });
             $('#carreras1-nav').append(careers.map(function (values) {
@@ -188,9 +150,6 @@ function removePopUp() {
 }
 
   $(function () {
-      if (contact)
-          return
-
       if (sct) {
           document.getElementById("creditsExample").textContent = "Créditos SCT";
           let credit = parseInt(document.getElementById("creditsNumberExample").textContent);
@@ -198,50 +157,11 @@ function removePopUp() {
       }
 
 
-      let malla = null
-      let semesterManager = null
-      if (prioridad) {
-          malla = new Malla(sct, SelectableRamo, 0.804, 1)
-          malla.enableCreditsSystem()
-          document.getElementById("custom-credits-USM").addEventListener("input", function updateSCTPlaceholder() {
-              if (this.value == "")
-                  document.getElementById("custom-credits-SCT").setAttribute("placeholder", "Ingrese un valor")
-              else
-                  document.getElementById("custom-credits-SCT").setAttribute("placeholder", Math.round(this.value * 5/3).toString())
-          })
-
-      } else if (personalizar && !mallaPersonal) {
-          malla = new Malla(sct, SelectableRamo, 0.804, 1)
-          malla.enableCreditsSystem()
-          document.getElementById("custom-credits-USM").addEventListener("input", function updateSCTPlaceholder() {
-              if (this.value == "")
-                  document.getElementById("custom-credits-SCT").setAttribute("placeholder", "Ingrese un valor")
-              else
-                document.getElementById("custom-credits-SCT").setAttribute("placeholder", Math.round(this.value * 5/3).toString())
-          })
-          document.getElementById("custom-creditsa-USM").addEventListener("input", function updateSCTPlaceholder() {
-              if (this.value == "")
-                  document.getElementById("custom-creditsa-SCT").setAttribute("placeholder", "Ingrese un valor")
-              else
-                  document.getElementById("custom-creditsa-SCT").setAttribute("placeholder", Math.round(this.value * 5/3).toString())
-          })
-
-
-          //document.getElementById("#reset").addEventListener("click", () => malla.semesterManager.cleanSemester())
-          //document.getElementById("#resetc").addEventListener("click", () => malla.semesterManager.cleanAll())
-      } else  if (mallaPersonal) {
-          malla = new CustomMalla(sct)
-          document.getElementById("cleanApprovedButton").addEventListener("click",() => malla.cleanSubjects())
-          malla.enableCreditsStats()
-          malla.enableCreditsSystem()
-      } else {
-          malla = new Malla(sct);
-          malla.enableCreditsStats()
-          malla.enableCreditsSystem()
-          malla.enableSave()
-          document.getElementById("cleanApprovedButton").addEventListener("click", () => malla.cleanSubjects())
-
-      }
+      let malla = new Malla(sct);
+      malla.enableCreditsStats()
+      malla.enableCreditsSystem()
+      malla.enableSave()
+      document.getElementById("cleanApprovedButton").addEventListener("click", () => malla.cleanSubjects())
 
       let drawnMalla = malla.setCareer(carr, fullCareerName, relaPath).then((val) => {
           return malla.drawMalla(".canvas")
@@ -251,28 +171,12 @@ function removePopUp() {
           malla.displayCreditSystem()
           malla.showColorDescriptions(".color-description")
           document.getElementById("overlay").addEventListener("click", () => {
-              if (prioridad || personalizar && !mallaPersonal) {
-                  malla.semesterManager.loadSemesters()
-              } else
-                  malla.loadApproved()
+              malla.loadApproved()
               malla.enablePrerCheck()
           })
       })
       drawnMalla.then(() => {
-          if (prioridad){
-              semesterManager = new Priorix(malla, "#priorix")
-              semesterManager.subjectsInManySemesters = true
-              semesterManager.mallaEditor.loadSubjects()
-          }
-          else if (personalizar && !mallaPersonal) {
-              semesterManager = new Generator(malla, "#priorix")
-              semesterManager.mallaEditor.loadSubjects()
-              semesterManager.mallaEditor.loadCategories()
-          }
-          malla.setSemesterManager(semesterManager)
           malla.generateCode()
-
-
       })
   });
 

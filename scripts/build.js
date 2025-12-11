@@ -73,42 +73,6 @@ const BUNDLES = [
       path.join(OUT, 'ramo.js')
     ],
     output: path.join(OUT, 'min1.js')
-  },
-  {
-    name: 'Prioridad bundle (min2.js)',
-    inputs: [
-      path.join(SRC, 'init.js'),
-      path.join(OUT, 'malla.js'),
-      path.join(OUT, 'ramo.js'),
-      path.join(OUT, 'selectableRamo.js'),
-      path.join(OUT, 'semesterManager.js'),
-      path.join(OUT, 'priorix.js'),
-      path.join(OUT, 'mallaEditor.js')
-    ],
-    output: path.join(OUT, 'min2.js')
-  },
-  {
-    name: 'Generator bundle (min3.js)',
-    inputs: [
-      path.join(SRC, 'init.js'),
-      path.join(OUT, 'malla.js'),
-      path.join(OUT, 'ramo.js'),
-      path.join(OUT, 'selectableRamo.js'),
-      path.join(OUT, 'semesterManager.js'),
-      path.join(OUT, 'generator.js'),
-      path.join(OUT, 'mallaEditor.js')
-    ],
-    output: path.join(OUT, 'min3.js')
-  },
-  {
-    name: 'Custom Malla bundle (min4.js)',
-    inputs: [
-      path.join(SRC, 'init.js'),
-      path.join(OUT, 'malla.js'),
-      path.join(OUT, 'ramo.js'),
-      path.join(OUT, 'customMalla.js')
-    ],
-    output: path.join(OUT, 'min4.js')
   }
 ];
 

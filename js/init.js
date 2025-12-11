@@ -1,1 +1,209 @@
-!function(){const e=window.location.hostname;["localhost","booterman98.github.io"].includes(e)||(window.location.href="https://booterman98.github.io/malla-interactiva/")}();let vh=.01*window.innerHeight;function render(e){return function(t,a){return a%2?e[t]:t}}document.documentElement.style.setProperty("--vh",`${vh}px`),window.addEventListener("resize",()=>{let e=.01*window.innerHeight;document.documentElement.style.setProperty("--vh",`${e}px`)});let relaPath="./",prioridad=document.URL.includes("prioridad"),personalizar=document.URL.includes("personalizar"),mallaPersonal=document.URL.includes("malla."),contact=document.URL.includes("contact"),fullCareerName="",texts="Malla";mallaPersonal?texts="Personal":prioridad?texts="Prioridad":personalizar&&(texts="Generadora"),("Malla"!==texts||contact)&&(relaPath="../");let params=new URLSearchParams(window.location.search),carr=localStorage.getItem("currentCarreer");if(params.get("m")&&(carr=params.get("m"),localStorage.setItem("currentCarreer",carr)),carr){let e=new URL(window.location.href);e.searchParams.set("m",carr),window.history.pushState({},"",e)}carr||(carr="INF");let sct=!0;"false"===params.get("SCT")&&(sct=!1),console.log("dom");let includes=document.querySelectorAll("[data-include]"),promises=[],welcomeTexts={};includes.forEach(e=>{let t=relaPath+"views/"+e.attributes["data-include"].nodeValue+".html";promises.push(fetch(t).then(e=>e.text()).then(t=>{e.insertAdjacentHTML("afterbegin",t)}))});let fileURL=relaPath+"data/welcomeTexts.json";function removePopUp(){d3.select("body").style("overflow","initial"),d3.selectAll(".overlay").style("-webkit-backdrop-filter","blur(0px) contrast(100%)"),d3.selectAll(".overlay").style("backdrop-filter","blur(0px) contrast(100%)"),d3.select(".overlay-content").transition().style("filter","opacity(0)"),d3.select(".overlay").transition().style("filter","opacity(0)").on("end",function(){d3.select(this).remove()})}function changeCreditsSystem(){let e="SCT",t="false";const a=new URLSearchParams(window.location.search);a.has(e)&&(t=!("true"===a.get(e))),e=encodeURI(e),t=encodeURI(t);for(var r,n=document.location.search.substr(1).split("&"),l=n.length;l--;)if((r=n[l].split("="))[0]===e){r[1]=t,n[l]=r.join("=");break}l<0&&(n[n.length]=[e,t].join("=")),document.location.search=n.join("&")}promises.push(fetch(fileURL).then(e=>e.json())),Promise.all(promises).then(()=>fetch(new Request(relaPath+"date.txt"))).then(e=>{console.log(e);let t=e.headers.get("last-modified"),a=new Date(t);console.log(a),document.getElementById("lastUpdate").textContent=a.toLocaleString()}),Promise.all(promises).then(e=>{welcomeTexts=e.pop()[texts];let t=document.getElementById("goToHome"),a=document.getElementById("goToCalculator"),r=document.getElementById("goToGenerator"),n=document.getElementById("contact");return mallaPersonal?r.setAttribute("href",relaPath+"personalizar/?m="+carr):(prioridad?a.classList.add("active"):a.setAttribute("href",relaPath+"prioridad/?m="+carr),personalizar?(r.classList.add("active"),document.getElementById("generate").setAttribute("href","./malla.html?m="+carr)):r.setAttribute("href",relaPath+"personalizar/?m="+carr)),contact&&n.classList.add("active"),n.setAttribute("href",relaPath+"contact/"),t.setAttribute("href",relaPath+"?m="+carr),fetch(relaPath+"/data/carreras.json")}).then(e=>e.json()).then(e=>{let t=document.querySelector('script[data-template="tab-template1"]').text.split(/\${(.+?)}/g),a=document.querySelector('script[data-template="tab-template2"]').text.split(/\${(.+?)}/g);contact&&document.querySelectorAll(".carrers").forEach(e=>e.remove()),e.forEach(e=>{if(e.Link===carr)if(fullCareerName=e.Nombre,welcomeTexts.welcomeTitle=welcomeTexts.welcomeTitle.replace("CARRERA",e.Nombre),$(".carrera").text(e.Nombre),mallaPersonal){let t=document.title;document.title=t+" basada en "+e.Nombre}else{let t=document.title.slice(0,17);t+=" "+e.Nombre,t+=document.title.slice(17),document.title=t}}),$("#carreras1-nav").append(e.map(function(e){return t.map(render(e)).join("")})),$("#carreras2-nav").append(e.map(function(e){return a.map(render(e)).join("")})),document.querySelector(".overlay-content h1")&&(document.querySelector(".overlay-content h1").textContent=welcomeTexts.welcomeTitle,document.querySelector(".overlay-content h5").textContent=welcomeTexts.welcomeDesc)}),$(function(){if(contact)return;if(sct){document.getElementById("creditsExample").textContent="Créditos SCT";let e=parseInt(document.getElementById("creditsNumberExample").textContent);document.getElementById("creditsNumberExample").textContent=Math.round(5*e/3).toString()}let e=null,t=null;prioridad?(e=new Malla(sct,SelectableRamo,.804,1),e.enableCreditsSystem(),document.getElementById("custom-credits-USM").addEventListener("input",function(){""==this.value?document.getElementById("custom-credits-SCT").setAttribute("placeholder","Ingrese un valor"):document.getElementById("custom-credits-SCT").setAttribute("placeholder",Math.round(5*this.value/3).toString())})):personalizar&&!mallaPersonal?(e=new Malla(sct,SelectableRamo,.804,1),e.enableCreditsSystem(),document.getElementById("custom-credits-USM").addEventListener("input",function(){""==this.value?document.getElementById("custom-credits-SCT").setAttribute("placeholder","Ingrese un valor"):document.getElementById("custom-credits-SCT").setAttribute("placeholder",Math.round(5*this.value/3).toString())}),document.getElementById("custom-creditsa-USM").addEventListener("input",function(){""==this.value?document.getElementById("custom-creditsa-SCT").setAttribute("placeholder","Ingrese un valor"):document.getElementById("custom-creditsa-SCT").setAttribute("placeholder",Math.round(5*this.value/3).toString())})):mallaPersonal?(e=new CustomMalla(sct),document.getElementById("cleanApprovedButton").addEventListener("click",()=>e.cleanSubjects()),e.enableCreditsStats(),e.enableCreditsSystem()):(e=new Malla(sct),e.enableCreditsStats(),e.enableCreditsSystem(),e.enableSave(),document.getElementById("cleanApprovedButton").addEventListener("click",()=>e.cleanSubjects()));let a=e.setCareer(carr,fullCareerName,relaPath).then(t=>e.drawMalla(".canvas"));a.then(()=>{e.updateStats(),e.displayCreditSystem(),e.showColorDescriptions(".color-description"),document.getElementById("overlay").addEventListener("click",()=>{prioridad||personalizar&&!mallaPersonal?e.semesterManager.loadSemesters():e.loadApproved(),e.enablePrerCheck()})}),a.then(()=>{prioridad?(t=new Priorix(e,"#priorix"),t.subjectsInManySemesters=!0,t.mallaEditor.loadSubjects()):personalizar&&!mallaPersonal&&(t=new Generator(e,"#priorix"),t.mallaEditor.loadSubjects(),t.mallaEditor.loadCategories()),e.setSemesterManager(t),e.generateCode()})});
+/*
+ * Obtencion de archivos JS de manera paralela y carga sincronica
+ */
+//loadjs(['https://kit.fontawesome.com/bf671ef02a.js', 'https://cdnjs.cloudflare.com/ajax/libs/d3/4.13.0/d3.min.js', '/js/ramos.js', '/js/canvas.js'], 'init');
+/*loadjs.ready('init', {
+    success: function() { console.log("Recursos cargados") },
+    error: function(depsNotFound) {
+        Swal.fire(
+            "Fallo al cargar",
+            "Tuvimos problemas al cargar algunas dependencias... el sitio se recargara en 5 segundos.",
+            "error"
+        );
+        setTimeout(function(){
+            location.reload();
+        }, 5000);
+    },
+});*/
+
+
+
+let vh = window.innerHeight * 0.01;
+// Then we set the value in the --vh custom property to the root of the document
+document.documentElement.style.setProperty('--vh', `${vh}px`);
+window.addEventListener('resize', () => {
+    // We execute the same script as before
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+});
+
+function render(props) {
+    return function(tok, i) {
+        return (i % 2) ? props[tok] : tok;
+    };
+}
+let relaPath = './'
+let fullCareerName = ""
+let texts = "Malla"
+// Disabled due to safari bug
+/*if ('serviceWorker' in navigator) {
+    console.log("Service worker compatible")
+    window.addEventListener('load', function() {
+        navigator.serviceWorker.register(relaPath + 'serviceWorker.js').then(function(registration) {
+            // Registration was successful
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        }, function(err) {
+            // registration failed :(
+            console.log('ServiceWorker registration failed: ', err);
+        });
+    });
+}*/
+
+let params = new URLSearchParams(window.location.search)
+
+let carr = localStorage.getItem("currentCarreer")
+
+if (params.get('m')) {
+    carr = params.get('m')
+    localStorage.setItem("currentCarreer", carr)
+}
+
+// update the url for feedback
+if (carr) {
+    let url = new URL(window.location.href)
+    url.searchParams.set('m', carr)
+    window.history.pushState({}, '', url);
+}
+
+
+if (!carr)
+    carr = 'INF'
+
+let sct = true
+if (params.get('SCT') === "false")
+    sct = false
+
+// document.addEventListener("DOMContentLoaded", loadViews)
+//
+// window.addEventListener("load", function () {console.log("load")})
+// function loadViews() {
+    console.log("dom")
+    // obtener vistas
+    let includes = document.querySelectorAll('[data-include]')
+    let promises = []
+    let welcomeTexts = {}
+    includes.forEach(include => {
+        let fileURL = relaPath + 'views/' + include.attributes['data-include'].nodeValue + '.html';
+        promises.push(fetch(fileURL).then(response => response.text())
+            .then(data => {
+                include.insertAdjacentHTML("afterbegin", data)
+            }))
+    })
+    let fileURL = relaPath + "data/welcomeTexts.json"
+    promises.push(fetch(fileURL).then(response => response.json()))
+    Promise.all(promises)
+        .then( () => {
+            return fetch(new Request(relaPath + "date.txt"))
+        }).then(response => {
+            console.log(response)
+            let lastModified = response.headers.get("last-modified")
+            let date = new Date(lastModified)
+            console.log(date)
+            document.getElementById("lastUpdate").textContent = date.toLocaleString()
+        })
+    Promise.all(promises).then((datas) => {
+        welcomeTexts = datas.pop()[texts]
+
+        let home = document.getElementById("goToHome")
+        home.setAttribute("href", relaPath + '?m=' + carr)
+        return fetch(relaPath + '/data/carreras.json')
+    }).then(response => response.json()).then((careers,) => {
+        //if (!mallaPersonal) {
+            let tabTpl1 = document.querySelector('script[data-template="tab-template1"]').text.split(/\${(.+?)}/g);
+            let tabTpl2 = document.querySelector('script[data-template="tab-template2"]').text.split(/\${(.+?)}/g);
+            if (contact) {
+                document.querySelectorAll(".carrers").forEach(element => element.remove())
+            }
+
+            careers.forEach(career => {
+                if (career['Link'] === carr) {
+                    fullCareerName = career["Nombre"]
+                    welcomeTexts["welcomeTitle"] = welcomeTexts["welcomeTitle"].replace("CARRERA", career['Nombre'])
+                    $('.carrera').text(career['Nombre'])
+                    let title = document.title.slice(0, 17)
+                    title += " " + career['Nombre']
+                    title += document.title.slice(17)
+                    document.title = title
+                }
+            });
+            $('#carreras1-nav').append(careers.map(function (values) {
+                return tabTpl1.map(render(values)).join('');
+            }));
+            $('#carreras2-nav').append(careers.map(function (values) {
+                return tabTpl2.map(render(values)).join('');
+            }));
+            if ( document.querySelector(".overlay-content h1")){
+            document.querySelector(".overlay-content h1").textContent = welcomeTexts["welcomeTitle"]
+            document.querySelector(".overlay-content h5").textContent = welcomeTexts["welcomeDesc"]
+        }
+    })
+// }
+
+function removePopUp() {
+    d3.select("body").style("overflow", "initial")
+    d3.selectAll(".overlay").style("-webkit-backdrop-filter", "blur(0px) contrast(100%)");
+    d3.selectAll(".overlay").style("backdrop-filter", "blur(0px) contrast(100%)");
+    d3.select(".overlay-content").transition().style("filter", "opacity(0)")
+    d3.select(".overlay").transition().style("filter", "opacity(0)").on('end', function() {
+        d3.select(this).remove();
+    })
+}
+
+  $(function () {
+      if (sct) {
+          document.getElementById("creditsExample").textContent = "Créditos SCT";
+          let credit = parseInt(document.getElementById("creditsNumberExample").textContent);
+          document.getElementById("creditsNumberExample").textContent = (Math.round(credit * 5 / 3)).toString()
+      }
+
+
+      let malla = new Malla(sct);
+      malla.enableCreditsStats()
+      malla.enableCreditsSystem()
+      malla.enableSave()
+      document.getElementById("cleanApprovedButton").addEventListener("click", () => malla.cleanSubjects())
+
+      let drawnMalla = malla.setCareer(carr, fullCareerName, relaPath).then((val) => {
+          return malla.drawMalla(".canvas")
+      });
+      drawnMalla.then(() => {
+          malla.updateStats()
+          malla.displayCreditSystem()
+          malla.showColorDescriptions(".color-description")
+          document.getElementById("overlay").addEventListener("click", () => {
+              malla.loadApproved()
+              malla.enablePrerCheck()
+          })
+      })
+      drawnMalla.then(() => {
+          malla.generateCode()
+      })
+  });
+
+function changeCreditsSystem() {
+    let key = 'SCT'
+    let value = 'false'
+    const params = new URLSearchParams(window.location.search);
+    if (params.has(key)) {
+        value = !('true' === params.get(key))
+    }
+    key = encodeURI(key); value = encodeURI(value);
+    var kvp = document.location.search.substr(1).split('&');
+
+    var i=kvp.length; var x; while(i--)
+{
+    x = kvp[i].split('=');
+
+    if (x[0]===key)
+    {
+        x[1] = value;
+        kvp[i] = x.join('=');
+        break;
+    }
+}
+
+    if(i<0) {kvp[kvp.length] = [key,value].join('=');}
+
+    //this will reload the page, it's likely better to store this until finished
+    document.location.search = kvp.join('&');
+}
