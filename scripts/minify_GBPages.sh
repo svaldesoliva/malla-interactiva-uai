@@ -1,43 +1,33 @@
 #!/bin/bash
 
 # Build script for GitHub Pages deployment
-# Builds the project and prepares files at root level for deployment
+# Builds the project and prepares files in dist/ folder for deployment
 
 set -e
 
 echo "🚀 Building for GitHub Pages deployment..."
 
+# Clean dist directory if it exists
+if [ -d "./dist" ]; then
+    echo "🧹 Cleaning existing dist directory..."
+    rm -rf ./dist
+fi
+
 # Run the production build
 echo "📦 Running production build..."
 npm run build
 
-# Copy files from public to root for GitHub Pages
-echo "📋 Copying files to root..."
+# Create dist directory
+echo "📁 Creating dist directory..."
+mkdir -p ./dist
 
-# Copy index.html
-cp ./public/index.html ./index.html
-
-# Create directories at root
-mkdir -p ./css
-mkdir -p ./views  
-mkdir -p ./data
-mkdir -p ./assets
-mkdir -p ./js
-
-# Copy all necessary files
-cp -r ./public/css/* ./css/
-cp -r ./public/views/* ./views/
-cp -r ./public/data/* ./data/
-cp -r ./public/assets/* ./assets/
-cp -r ./public/js/* ./js/
-cp ./public/browserconfig.xml ./browserconfig.xml 2>/dev/null || true
-cp ./public/site.webmanifest ./site.webmanifest 2>/dev/null || true
-cp ./public/serviceWorker.js ./serviceWorker.js 2>/dev/null || true
+# Copy all files from public to dist (excluding .DS_Store)
+echo "📋 Copying built files to dist/..."
+rsync -av --exclude='.DS_Store' ./public/ ./dist/
 
 # Create date file
 echo "📅 Creating date file..."
-date +"%s000" | tee date.txt
-cp date.txt ./public/date.txt 2>/dev/null || true
+date +"%s000" | tee ./dist/date.txt
 
 echo "✨ GitHub Pages build complete!"
-echo "📂 Deployment structure ready at root level"
+echo "📂 Deployment structure ready in ./dist/"
