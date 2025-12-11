@@ -20,7 +20,6 @@ Adaptación del visualizador de mallas interactivo para la Universidad Adolfo Ib
 
 
 # Características de la malla
-- Visualiza los créditos de las asignaturas en formato SCT.
 - Selecciona asignaturas para aprobarlas, a medida que vayas aprobando más ramos, podrás ver qué ramos se desbloquean.
 - Guarda tu progreso automáticamente en el navegador.
 - Modo oscuro y modo claro automático basado en la configuración del OS.
