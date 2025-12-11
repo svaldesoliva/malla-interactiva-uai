@@ -11,9 +11,9 @@ Adaptación del visualizador de mallas interactivo para la Universidad Adolfo Ib
 
 
 # To-Do
-- [ ] Agregar logo institucional(?)
+- [x] Agregar logo institucional
 - [ ] Agregar más carreras
-  - [ ] Google Forms para que usuarios suban capturas de Intranet>Plan de Estudios
+  - [x] Google Forms para que usuarios suban capturas de Intranet>Plan de Estudios
   - [ ] Script en python para generar archivos de mallas
 
 
