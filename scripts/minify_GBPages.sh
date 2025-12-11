@@ -1,25 +1,52 @@
 #!/bin/bash
 
-# based on:
-# https://unix.stackexchange.com/questions/249701/how-to-minify-javascript-and-css-with-command-line-using-minify-tool
-# minification of js files
+# Build script for GitHub Pages deployment
+# Builds the project and prepares files at root level for deployment
 
-./scripts/minify_dev.sh
-npx terser js/init.js -c -m -o js/init.js
-find js/ -regex '.*[^(?:min[0-9+)|(init)]\.js' \
-  -delete
+set -e
 
-# minification of css files
-find css/ -type f \
-    -name "*.css" ! -name "*.min.*" \
-    -exec echo {} \; \
-    -exec npx csso --input {} --output {}.min \; \
-    -exec rm {} \; \
-    -exec mv -f {}.min {} \;
+echo "🚀 Building for GitHub Pages deployment..."
 
-# Create file representing last update date
+# Run the production build
+echo "📦 Running production build..."
+npm run build
+
+# Copy files from public to root for GitHub Pages
+echo "📋 Copying files to root..."
+
+# Copy index.html and update paths
+cp ./public/index.html ./index.html
+
+# Create directories at root
+mkdir -p ./css
+mkdir -p ./views  
+mkdir -p ./data
+mkdir -p ./assets
+
+# Copy all necessary files
+cp -r ./public/css/* ./css/
+cp -r ./public/views/* ./views/
+cp -r ./public/data/* ./data/
+cp -r ./public/assets/* ./assets/
+cp ./public/browserconfig.xml ./browserconfig.xml 2>/dev/null || true
+cp ./public/site.webmanifest ./site.webmanifest 2>/dev/null || true
+cp ./public/serviceWorker.js ./serviceWorker.js 2>/dev/null || true
+
+# Fix paths in root index.html (remove ../ since files are now at root level)
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  # macOS
+  sed -i '' 's|href="../js/|href="./js/|g' ./index.html
+  sed -i '' 's|src="../js/|src="./js/|g' ./index.html
+else
+  # Linux
+  sed -i 's|href="../js/|href="./js/|g' ./index.html
+  sed -i 's|src="../js/|src="./js/|g' ./index.html
+fi
+
+# Create date file
+echo "📅 Creating date file..."
 date +"%s000" | tee date.txt
+cp date.txt ./public/date.txt 2>/dev/null || true
 
-
-# moves assets to root
-cp ./assets/* ./
+echo "✨ GitHub Pages build complete!"
+echo "📂 Deployment structure ready at root level"
