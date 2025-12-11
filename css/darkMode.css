@@ -13,6 +13,12 @@
  */
  @media(prefers-color-scheme: dark) {
 @import url("https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap");
+
+/* UAI Logo - keep original colors (don't invert) in dark mode */
+.uai-logo {
+    filter: invert(0);
+}
+
 :root {
   --blue: #2A9FD6;
   --indigo: #6610f2;

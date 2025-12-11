@@ -4,6 +4,12 @@ input[type=number]::-webkit-outer-spin-button {
     -moz-appearance: none;
     appearance: none;
 }
+
+/* UAI Logo - invert colors in light mode */
+.uai-logo {
+    filter: invert(1);
+}
+
 /* Exclusivo para la "card" de prioridad y personalizar */
 /* Aqui ocurre el quiebre de la fila */
 @media (max-width: 1199.95px) {
