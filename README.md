@@ -15,6 +15,7 @@ Adaptación del visualizador de mallas interactivo para la Universidad Adolfo Ib
 - [ ] Agregar más carreras
   - [x] Google Forms para que usuarios suban capturas de Intranet>Plan de Estudios
   - [ ] Script en python para generar archivos de mallas
+- [ ] Modificar lógica y sistema de creditos y períodos en los que se dicta el ramo
 
 
 
@@ -60,8 +61,8 @@ cd malla-interactiva-uai
 Con *npm* instalado en el equipo, ejecutar en una terminal los siguientes comandos:
 ```bash
 npm install
-npm start
+npm run dev
 ```
-Luego, se debería ejecutar una instancia local de la página en `http://localhost:3000`
+Luego, se debería ejecutar una instancia local de la página en `http://localhost:3000` o en el siguiente puerto disponible
 
 ---
