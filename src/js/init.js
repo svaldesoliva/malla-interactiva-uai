@@ -108,31 +108,27 @@ if (params.get('SCT') === "false")
         home.setAttribute("href", relaPath + '?m=' + carr)
         return fetch(relaPath + '/data/carreras.json')
     }).then(response => response.json()).then((careers,) => {
-        //if (!mallaPersonal) {
-            let tabTpl1 = document.querySelector('script[data-template="tab-template1"]').text.split(/\${(.+?)}/g);
-            let tabTpl2 = document.querySelector('script[data-template="tab-template2"]').text.split(/\${(.+?)}/g);
-            if (contact) {
-                document.querySelectorAll(".carrers").forEach(element => element.remove())
-            }
+        let tabTpl1 = document.querySelector('script[data-template="tab-template1"]').text.split(/\${(.+?)}/g);
+        let tabTpl2 = document.querySelector('script[data-template="tab-template2"]').text.split(/\${(.+?)}/g);
 
-            careers.forEach(career => {
-                if (career['Link'] === carr) {
-                    fullCareerName = career["Nombre"]
-                    welcomeTexts["welcomeTitle"] = welcomeTexts["welcomeTitle"].replace("CARRERA", career['Nombre'])
-                    $('.carrera').text(career['Nombre'])
-                    let title = document.title.slice(0, 17)
-                    title += " " + career['Nombre']
-                    title += document.title.slice(17)
-                    document.title = title
-                }
-            });
-            $('#carreras1-nav').append(careers.map(function (values) {
-                return tabTpl1.map(render(values)).join('');
-            }));
-            $('#carreras2-nav').append(careers.map(function (values) {
-                return tabTpl2.map(render(values)).join('');
-            }));
-            if ( document.querySelector(".overlay-content h1")){
+        careers.forEach(career => {
+            if (career['Link'] === carr) {
+                fullCareerName = career["Nombre"]
+                welcomeTexts["welcomeTitle"] = welcomeTexts["welcomeTitle"].replace("CARRERA", career['Nombre'])
+                $('.carrera').text(career['Nombre'])
+                let title = document.title.slice(0, 17)
+                title += " " + career['Nombre']
+                title += document.title.slice(17)
+                document.title = title
+            }
+        });
+        $('#carreras1-nav').append(careers.map(function (values) {
+            return tabTpl1.map(render(values)).join('');
+        }));
+        $('#carreras2-nav').append(careers.map(function (values) {
+            return tabTpl2.map(render(values)).join('');
+        }));
+        if ( document.querySelector(".overlay-content h1")){
             document.querySelector(".overlay-content h1").textContent = welcomeTexts["welcomeTitle"]
             document.querySelector(".overlay-content h5").textContent = welcomeTexts["welcomeDesc"]
         }
