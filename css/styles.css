@@ -4,6 +4,9 @@ input[type=number]::-webkit-outer-spin-button {
     -moz-appearance: none;
     appearance: none;
 }
+
+
+
 /* Exclusivo para la "card" de prioridad y personalizar */
 /* Aqui ocurre el quiebre de la fila */
 @media (max-width: 1199.95px) {
