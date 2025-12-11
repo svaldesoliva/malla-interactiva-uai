@@ -21,8 +21,8 @@ const SRC_CORE = path.join(SRC_JS, 'core');
 const SRC_INIT = path.join(SRC_JS, 'init');
 const SRC_VIEWS = path.join(ROOT, 'src', 'views');
 const SRC_CSS = path.join(ROOT, 'src', 'css');
-const OUT = path.join(ROOT, 'js');
 const PUBLIC = path.join(ROOT, 'public');
+const OUT = path.join(PUBLIC, 'js');
 const PUBLIC_VIEWS = path.join(PUBLIC, 'views');
 const PUBLIC_CSS = path.join(PUBLIC, 'css');
 

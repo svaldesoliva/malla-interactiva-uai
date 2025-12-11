@@ -1,7 +1,10 @@
 module.exports = {
   server: {
     baseDir: "./public",
-    index: "index.html"
+    routes: {
+      "/js": "./js",
+      "/src": "./src"
+    }
   },
   port: 3000,
   files: [
@@ -9,7 +12,8 @@ module.exports = {
     "./src/css/*.css",
     "./src/js/**/*.js",
     "./public/data/*.json",
-    "./src/views/*.html"
+    "./src/views/*.html",
+    "./js/*.js"
   ],
   watchOptions: {
     ignoreInitial: true,
@@ -17,5 +21,6 @@ module.exports = {
   },
   open: true,
   notify: false,
-  ghostMode: false
+  ghostMode: false,
+  startPath: "/public/"
 };

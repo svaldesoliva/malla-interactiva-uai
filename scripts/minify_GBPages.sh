@@ -14,7 +14,7 @@ npm run build
 # Copy files from public to root for GitHub Pages
 echo "📋 Copying files to root..."
 
-# Copy index.html and update paths
+# Copy index.html
 cp ./public/index.html ./index.html
 
 # Create directories at root
@@ -22,26 +22,17 @@ mkdir -p ./css
 mkdir -p ./views  
 mkdir -p ./data
 mkdir -p ./assets
+mkdir -p ./js
 
 # Copy all necessary files
 cp -r ./public/css/* ./css/
 cp -r ./public/views/* ./views/
 cp -r ./public/data/* ./data/
 cp -r ./public/assets/* ./assets/
+cp -r ./public/js/* ./js/
 cp ./public/browserconfig.xml ./browserconfig.xml 2>/dev/null || true
 cp ./public/site.webmanifest ./site.webmanifest 2>/dev/null || true
 cp ./public/serviceWorker.js ./serviceWorker.js 2>/dev/null || true
-
-# Fix paths in root index.html (remove ../ since files are now at root level)
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  # macOS
-  sed -i '' 's|href="../js/|href="./js/|g' ./index.html
-  sed -i '' 's|src="../js/|src="./js/|g' ./index.html
-else
-  # Linux
-  sed -i 's|href="../js/|href="./js/|g' ./index.html
-  sed -i 's|src="../js/|src="./js/|g' ./index.html
-fi
 
 # Create date file
 echo "📅 Creating date file..."
