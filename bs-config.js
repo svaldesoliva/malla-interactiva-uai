@@ -1,15 +1,15 @@
 module.exports = {
   server: {
-    baseDir: "./",
+    baseDir: "./public",
     index: "index.html"
   },
   port: 3000,
   files: [
-    "./*.html",
-    "./css/*.css",
-    "./js/*.js",
-    "./data/*.json",
-    "./views/*.html"
+    "./public/*.html",
+    "./src/css/*.css",
+    "./src/js/**/*.js",
+    "./public/data/*.json",
+    "./src/views/*.html"
   ],
   watchOptions: {
     ignoreInitial: true,

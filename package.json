@@ -21,8 +21,8 @@
     "start": "browser-sync start --config bs-config.js",
     "dev": "npm run build:dev && npm start",
     "cleanDev": "./scripts/clean.sh",
-    "lint": "eslint js/**/*.js --ignore-pattern 'js/min*.js' --ignore-pattern 'js/init.js'",
-    "lint:fix": "eslint js/**/*.js --ignore-pattern 'js/min*.js' --ignore-pattern 'js/init.js' --fix"
+    "lint": "eslint src/js/**/*.js",
+    "lint:fix": "eslint src/js/**/*.js --fix"
   },
   "repository": {
     "type": "git",
