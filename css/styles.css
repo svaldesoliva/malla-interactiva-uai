@@ -5,9 +5,13 @@ input[type=number]::-webkit-outer-spin-button {
     appearance: none;
 }
 
-/* UAI Logo - invert colors in light mode */
-.uai-logo {
-    filter: invert(1);
+/* UAI Logo - show black logo in light mode, hide white logo */
+.uai-logo-light {
+    display: block;
+}
+
+.uai-logo-dark {
+    display: none;
 }
 
 /* Exclusivo para la "card" de prioridad y personalizar */
