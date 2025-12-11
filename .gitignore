@@ -14,11 +14,15 @@ node_modules/
 # Build artifacts
 /js/min*.js
 /js/init.js
+/js/malla.js
+/js/ramo.js
 *.min.js
 *.min.css
 
 # Build output
 dist/
+public/css/
+public/views/
 
 # Compressed files
 *.gz

@@ -19,7 +19,12 @@ const ROOT = path.resolve(__dirname, '..');
 const SRC_JS = path.join(ROOT, 'src', 'js');
 const SRC_CORE = path.join(SRC_JS, 'core');
 const SRC_INIT = path.join(SRC_JS, 'init');
+const SRC_VIEWS = path.join(ROOT, 'src', 'views');
+const SRC_CSS = path.join(ROOT, 'src', 'css');
 const OUT = path.join(ROOT, 'js');
+const PUBLIC = path.join(ROOT, 'public');
+const PUBLIC_VIEWS = path.join(PUBLIC, 'views');
+const PUBLIC_CSS = path.join(PUBLIC, 'css');
 
 // Check if terser is available
 function checkDependencies() {
@@ -109,6 +114,34 @@ function build(mode = 'development') {
     minifyJS([initSrc], initOut);
     console.log('');
   }
+
+  // Copy views to public
+  console.log('📋 Copying views to public...');
+  if (!fs.existsSync(PUBLIC_VIEWS)) {
+    fs.mkdirSync(PUBLIC_VIEWS, { recursive: true });
+  }
+  const viewFiles = fs.readdirSync(SRC_VIEWS);
+  viewFiles.forEach(file => {
+    fs.copyFileSync(
+      path.join(SRC_VIEWS, file),
+      path.join(PUBLIC_VIEWS, file)
+    );
+  });
+  console.log('✅ Views copied\n');
+
+  // Copy CSS to public
+  console.log('📋 Copying CSS to public...');
+  if (!fs.existsSync(PUBLIC_CSS)) {
+    fs.mkdirSync(PUBLIC_CSS, { recursive: true });
+  }
+  const cssFiles = fs.readdirSync(SRC_CSS);
+  cssFiles.forEach(file => {
+    fs.copyFileSync(
+      path.join(SRC_CSS, file),
+      path.join(PUBLIC_CSS, file)
+    );
+  });
+  console.log('✅ CSS copied\n');
 
   // Build all bundles
   console.log('📦 Building bundles...\n');
