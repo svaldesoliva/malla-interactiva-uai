@@ -16,7 +16,9 @@ const { execSync } = require('child_process');
 
 // Paths
 const ROOT = path.resolve(__dirname, '..');
-const SRC = path.join(ROOT, 'src', 'js');
+const SRC_JS = path.join(ROOT, 'src', 'js');
+const SRC_CORE = path.join(SRC_JS, 'core');
+const SRC_INIT = path.join(SRC_JS, 'init');
 const OUT = path.join(ROOT, 'js');
 
 // Check if terser is available
@@ -33,8 +35,8 @@ function checkDependencies() {
 
 // Ensure directories exist
 function ensureDirectories() {
-  if (!fs.existsSync(SRC)) {
-    console.error(`❌ Error: Source directory not found: ${SRC}`);
+  if (!fs.existsSync(SRC_JS)) {
+    console.error(`❌ Error: Source directory not found: ${SRC_JS}`);
     process.exit(1);
   }
   if (!fs.existsSync(OUT)) {
@@ -68,7 +70,7 @@ const BUNDLES = [
   {
     name: 'Main bundle (min1.js)',
     inputs: [
-      path.join(SRC, 'init.js'),
+      path.join(OUT, 'init.js'),
       path.join(OUT, 'malla.js'),
       path.join(OUT, 'ramo.js')
     ],
@@ -79,23 +81,31 @@ const BUNDLES = [
 // Main build function
 function build(mode = 'development') {
   console.log('\n🚀 Starting build process...');
-  console.log(`📂 Source: ${SRC}`);
+  console.log(`📂 Source: ${SRC_JS}`);
   console.log(`📂 Output: ${OUT}`);
   console.log(`🔧 Mode: ${mode}\n`);
 
   checkDependencies();
   ensureDirectories();
 
-  // First, copy init.js from source to output (for development)
-  const initSrc = path.join(SRC, 'init.js');
+  // Copy/minify core files
+  const mallaSrc = path.join(SRC_CORE, 'Malla.js');
+  const mallaOut = path.join(OUT, 'malla.js');
+  const ramoSrc = path.join(SRC_CORE, 'Ramo.js');
+  const ramoOut = path.join(OUT, 'ramo.js');
+  const initSrc = path.join(SRC_INIT, 'main.js');
   const initOut = path.join(OUT, 'init.js');
   
   if (mode === 'development') {
-    console.log('📋 Copying init.js for development...');
+    console.log('📋 Copying source files for development...');
+    fs.copyFileSync(mallaSrc, mallaOut);
+    fs.copyFileSync(ramoSrc, ramoOut);
     fs.copyFileSync(initSrc, initOut);
-    console.log('✅ init.js copied (unminified)\n');
+    console.log('✅ Source files copied (unminified)\n');
   } else {
-    console.log('🗜️  Minifying init.js for production...');
+    console.log('🗜️  Minifying source files for production...');
+    minifyJS([mallaSrc], mallaOut);
+    minifyJS([ramoSrc], ramoOut);
     minifyJS([initSrc], initOut);
     console.log('');
   }
