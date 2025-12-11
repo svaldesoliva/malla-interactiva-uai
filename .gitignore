@@ -17,6 +17,9 @@ node_modules/
 *.min.js
 *.min.css
 
+# Build output
+dist/
+
 # Compressed files
 *.gz
 *.zip
