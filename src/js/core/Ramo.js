@@ -19,23 +19,13 @@ class Ramo {
     }
 
 
-    constructor(name, sigla, credits, category, prer = [], id, malla, creditsSCT = 0, isCustom = false, dictatesIn="") {
+    constructor(name, sigla, credits, category, prer = [], id, malla, isCustom = false) {
         // Core subject properties
         this.name = name;
         this.sigla = sigla;
         this.credits = credits;
         this.category = category;
         this.prer = new Set(prer);
-        // Handle SCT credits: use provided value or calculate from USM credits (1 USM ≈ 1.67 SCT)
-        if (creditsSCT){
-            this.creditsSCT = creditsSCT
-            this.USMtoSCT = false
-        } else {
-            this.creditsSCT = Math.round(credits * 5 / 3)
-            this.USMtoSCT = true
-        }
-        // dictatesIn: "P" = even semesters (pares), "I" = odd semesters (impares), "" = both
-        this.dictatesIn = dictatesIn
 
         // Rendering and interaction properties
         this.malla = malla
@@ -48,31 +38,18 @@ class Ramo {
     }
 
     // Auto explanatorio
-    getSCTCredits() {
-        return this.creditsSCT
-    }
-
-    // Auto explanatorio
-    getUSMCredits() {
+    getCredits() {
         return this.credits;
     }
 
-    // Actualiza uno o ambos créditos dependiendo de los valores de entrada
-    updateCredits(creditsUSM, creditsSCT = 0) {
-        this.credits = creditsUSM
-        if (creditsSCT)
-            this.creditsSCT = creditsSCT
-        else
-            this.creditsSCT = Math.round(creditsUSM * 5 / 3)
+    // Actualiza los créditos
+    updateCredits(credits) {
+        this.credits = credits
     }
 
-    // Retorna los creditos del tipo correcto según como el usuario lo pida
+    // Retorna los creditos
     getDisplayCredits() {
-        if (this.malla.sct) {
-            return  this.getSCTCredits()
-        } else {
-            return this.getUSMCredits()
-        }
+        return this.getCredits()
     }
 
     // renderiza el ramo
@@ -104,9 +81,8 @@ class Ramo {
             counter +=1
         })
         this.ramo.append("title").text(
-            "Ramo " + this.sigla+ ", " + this.name+ ". Este ramo tiene " + this.getUSMCredits() + " créditos USM y " +
-            this.getSCTCredits() + " créditos SCT. Se dicta en " + dictatesIn[this.dictatesIn] + " y "
-            + (this.prer.size ? "tiene como prerrequisitos a " + prers : "no tiene prerrequisitos") + ".")
+            "Ramo " + this.sigla+ ", " + this.name+ ". Este ramo tiene " + this.getCredits() + " créditos SCT" +
+            (this.prer.size ? " y tiene como prerrequisitos a " + prers : " y no tiene prerrequisitos") + ".")
 
         this.ramo.append("rect")
             .attr("x", posX)
@@ -178,19 +154,7 @@ class Ramo {
             .attr("fill", "white")
             .attr("font-size", scaleX < 0.85 ? 11 : 12);
 
-        // Indicador the semestres
-        if (this.dictatesIn === "P" || this.dictatesIn === "I") {
-            this.ramo.append("text")
-                .attr("x", posX + sizeX - (scaleX < 0.85 ? 25 : 30))
-                .attr("y", posY + 10)
 
-                .attr("dominant-baseline", "central")
-                .attr("text-anchor", "middle")
-                .text(this.dictatesIn)
-                .attr("font-weight", "bold")
-                .attr("fill", "yellow")
-                .attr("font-size", scaleX < 0.85 ? 11 : 12);
-        }
         this.drawActions(posX, posY, sizeX, sizeY);
 
 

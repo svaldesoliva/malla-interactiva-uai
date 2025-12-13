@@ -15,7 +15,9 @@ Adaptación del visualizador de mallas interactivo para la Universidad Adolfo Ib
 - [ ] Agregar más carreras
   - [x] Google Forms para que usuarios suban capturas de Intranet>Plan de Estudios
   - [ ] Script en python para generar archivos de mallas
-- [ ] Modificar lógica y sistema de creditos y períodos en los que se dicta el ramo
+- [x] Modificar lógica y sistema de creditos y períodos en los que se dicta el ramo
+  - [x] Remover sistema de créditos USM (solo se usa SCT ahora)
+  - [x] Remover campo de dictación ("A") de los datos
 
 
 
@@ -44,11 +46,9 @@ En donde
 `s2` Corresponde al semestre, en este caso, Semestre II. `s2` contiene una lista de ramos, donde cada ramo tiene 5 items en el siguiente orden:
 1. ***Ramo***: El nombre completo del ramo.
 2. ***Sigla***: Sigla del ramo. **Única** para cada ramo, no se puede repetir y no puede contener espacios.
-3. ***Créditos***: Entero, la cantidad de créditos.
-4. ***Creditos #2*** : *falta quitar esto que se ocupaba en el de la usm, pero para efectos practicos duplicar el anterior hasta un update*
-5. ***Categoría***: Categoría del ramo al que pertenece (por ejemplo, *PC*: Plan Común).
-6. ***Prerrequisitos***: Una lista de strings que contiene las siglas de los prerrequisitos del ramo.
-7. ***Cuando se da el ramo*** : *documentar dsp*
+3. ***Créditos SCT***: Entero, la cantidad de créditos SCT (Sistema de Créditos Transferibles).
+4. ***Categoría***: Categoría del ramo al que pertenece (por ejemplo, *PC*: Plan Común).
+5. ***Prerrequisitos***: Una lista de strings que contiene las siglas de los prerrequisitos del ramo.
 
 Adicionalmente, se debe tener un archivo `colors_CARR.json` que contiene los colores para cada categoría en formato hexadecimal.
 

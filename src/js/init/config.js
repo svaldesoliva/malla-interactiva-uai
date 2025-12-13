@@ -16,12 +16,9 @@ const CONFIG = {
 
   // Credits System Configuration
   CREDITS: {
-    // Default credit system to use: 'SCT' or 'USM'
+    // Only SCT credit system is used
     defaultSystem: 'SCT',
-    // Show toggle button to switch between credit systems
-    showSystemToggle: true,
-    // Conversion ratio from USM credits to SCT credits
-    usmToSctRatio: 5 / 3
+    showSystemToggle: false
   },
 
   // Security & Domain Configuration

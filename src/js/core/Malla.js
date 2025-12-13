@@ -2,7 +2,7 @@
 
 class Malla {
 
-    constructor(sct = false, subjectType = Ramo, scaleX = 1, scaleY = 1) {
+    constructor(subjectType = Ramo, scaleX = 1, scaleY = 1) {
 
         // Propiedades antes del render
         this.scaleX = scaleX;
@@ -11,7 +11,6 @@ class Malla {
         this.rawMalla = {};
         this.categories = {};
         this.malla = {};
-        this.sct = sct;
         this.longestSemester = 0;
         this.totalCredits = 0;
         this.totalSubjects = 0;
@@ -111,19 +110,17 @@ class Malla {
             malla[semester].forEach(subject => {
                 // Se instancia el ramo y se agrega a la malla en su semestre
                 totalRamos += 1;
-                // Handle different data formats: new format includes SCT credits and dictatesIn info
-                if (subject.length === 7) {
-                    // New format: [name, code, USMcredits, SCTcredits, category, prerequisites, dictatesIn]
-                    this.malla[semester][subject[1]] = new this.subjectType(subject[0], subject[1], subject[2], subject[4], subject[5],this.SUBJECTID++, this, subject[3], false ,subject[6])
-                } else {
-                    // Old format: [name, code, credits, category, prerequisites?]
-                    this.malla[semester][subject[1]] = new this.subjectType(subject[0], subject[1], subject[2], subject[3], (function hasPrer() {
-                        if (subject.length > 4) {
-                            return subject[4];
-                        }
-                        return [];
-                    })(), this.SUBJECTID++, this);
-                }
+                // Format: [name, code, credits(SCT), category, prerequisites]
+                this.malla[semester][subject[1]] = new this.subjectType(
+                    subject[0], // name
+                    subject[1], // sigla
+                    subject[2], // credits (SCT)
+                    subject[3], // category
+                    subject.length > 4 ? subject[4] : [], // prerequisites
+                    this.SUBJECTID++, // id
+                    this, // malla
+                    false // isCustom
+                );
                 // Add subject to global subjects registry for easy lookup by code
                 this.ALLSUBJECTS[subject[1]] = this.malla[semester][subject[1]];
                 totalCredits += this.malla[semester][subject[1]].getDisplayCredits()
@@ -365,7 +362,7 @@ class Malla {
     displayCreditSystem() {
         if (!this.showCreditSystem)
             return
-        d3.select("#credits-system").text(this.sct ? 'SCT' : 'USM')
+        d3.select("#credits-system").text('SCT')
     }
 
     // Actualiza los datos como porcentaje de ramos aprobados etc
@@ -567,15 +564,9 @@ class Malla {
 
                 subjectData.push(subject.name)
                 subjectData.push(subject.sigla)
-                subjectData.push(subject.getUSMCredits())
-                if (subject.USMtoSCT)
-                    subjectData.push(0)
-                else
-                    subjectData.push(subject.getSCTCredits())
-
+                subjectData.push(subject.getCredits())
                 subjectData.push(subject.category)
                 subjectData.push([...subject.prer])
-                subjectData.push(subject.dictatesIn)
                 data[key].push(subjectData)
 
             })

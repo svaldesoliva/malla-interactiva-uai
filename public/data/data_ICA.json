@@ -1,0 +1,60 @@
+{
+  "s1": [
+    ["Core: Civilización Contemporánea I", "CORE101", 5, "CORE", []],
+    ["Matemáticas Avanzadas I", "MAT124", 6, "LC", []],
+    ["Razonamiento Cuantitativo con Datos I", "MAT125", 6, "LC", []],
+    ["Introducción a la Microeconomía", "ECO122", 6, "ECO", []],
+    ["Management", "MGT103", 6, "MGT", []],
+    ["Educación Física I", "GYM101", 1, "AC", []]
+  ],
+  "s2": [
+    ["Core: Civilización Contemporánea II", "CORE102", 5, "CORE", []],
+    ["Core: Escritura Argumentativa", "CORE103", 4, "CORE", []],
+    ["Matemáticas Avanzadas II", "MAT209", 6, "LC", ["MAT124"]],
+    ["Razonamiento Cuantitativo con Datos II", "MAT210", 6, "LC", ["MAT125"]],
+    ["Introducción a la Macroeconomía", "ECO123", 6, "ECO", []],
+    ["Taller de Emprendimiento Tecnológico y Sostenibilidad", "MGT131", 6, "MGT", ["MGT103"]],
+    ["Educación Física II", "GYM102", 1, "AC", []],
+    ["Práctica Profesional I", "PPI303", 6, "AC", []]
+  ],
+  "s3": [
+    ["Core: Literatura y Humanidades", "CORE201", 4, "CORE", ["CORE102"]],
+    ["Electivo Historia", "EAL202", 4, "CORE", ["CORE102"]],
+    ["Microeconomía", "ECO212", 6, "ECO", ["ECO122"]],
+    ["Estadísticas & Data Science", "EST108", 6, "LC", ["MAT210", "MAT209"]],
+    ["Personas y Organizaciones", "MGT212", 6, "MGT", ["MGT103"]],
+    ["Taller de Introducción a los Negocios", "MGT101", 6, "MGT", []],
+
+    ["Educación Física III", "GYM103", 1, "AC", []]
+  ],
+  "s4": [
+    ["Core: Literatura y Humanidades", "CORE202", 4, "CORE", ["CORE102"]],
+    ["Electivo Filosofía", "EAL201", 4, "CORE", ["CORE102"]],
+    ["Contabilidad", "ACCT212", 6, "MGT", ["MGT103"]],
+    ["Marketing", "MKT299", 6, "MGT", []],
+    ["Psicología Social", "PSY238", 6, "CS", []],
+    ["Organización Industrial", "ECO214", 6, "ECO", ["ECO212"]],
+    ["Taller de Expresión Oral I", "LING111", 1, "AC", []],
+    ["Educación Física IV", "GYM104", 1, "AC", []]
+  ],
+  "s5": [
+    ["Core: Ética", "CORE301", 4, "CORE", ["CORE102"]],
+    ["Electivo Ciencias", "EAL205", 4, "CORE", ["CORE102"]],
+    ["Finanzas", "FIN299", 6, "MGT", ["ACCT212"]],
+    ["Econometría", "ECO355", 6, "LC", ["EST108"]],
+    ["Derecho e Institucionalidad", "DER151", 6, "CS", []],
+    ["Managerial Economics", "MGT106", 6, "ECO", ["ECO212"]],
+    ["Liderazgo", "LID100", 1, "MGT", []],
+    ["Educación Física V", "GYM105", 1, "AC", []]
+  ],
+  "s6": [
+    ["Core: Ciencias", "CORE302", 4, "CORE", ["CORE102"]],
+    ["Core: Arte y Humanidades", "CORE304", 4, "CORE", ["CORE102"]],
+    ["Gestión de Operaciones", "MGT350", 6, "MGT", ["EST108"]],
+    ["Sociedad, Cultura y Política", "MGT300", 6, "CS", []],
+    ["Análisis Macroeconómico Global", "ECO209", 6, "ECO", ["ECO123"]],
+    ["Estrategia", "MGT105", 6, "MGT", ["FIN299", "MKT299", "MGT212"]],
+    ["Taller de Expresión Oral II", "LING112", 1, "AC", ["LING111"]],
+    ["Educación Física VI", "GYM106", 1, "AC", []]
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "CORE": ["#685298", "Core Curriculum Artes Liberales"],
+  "CS": ["#e9c46a", "Ciencias Sociales Complementarias"],
+  "LC": ["#2a9d8f", "Línea Cuantitativa"],
+  "MGT": ["#58b3dc", "Management"],
+  "AC": ["#706f6f", "Asignaturas Complementarias UAI"],
+  "ECO": ["#89ba68", "Economía"]
+}
