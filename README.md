@@ -6,28 +6,26 @@ WebApp para visualizar la malla curricular de tu carrera.
 <br>
 
 ![GitHub top language](https://img.shields.io/github/languages/top/svaldesoliva/malla-interactiva-uai?style=flat-square) 
+![Website](https://img.shields.io/website?label=mallauai.app&style=flat-square&url=https%3A%2F%2Fmallauai.app%2F)
 ![GitHub license](https://img.shields.io/github/license/svaldesoliva/malla-interactiva-uai?style=flat-square&color=green)
-![Website](https://img.shields.io/website?label=malla-interactiva&style=flat-square&url=https%3A%2F%2Fmallauai.app%2F)
 
 ![Screenshot](public/assets/screenshot.png)
 
 </div>
+
 # Índice
 0. [To-Do](#To-Do)
 1. [Características de la malla](#Características-de-la-malla)
 2. [¿Cómo funciona la malla?](#¿Cómo-funciona-la-malla?)
 3. [Probar malla](#Probar-malla)
-4. [Agradecimientos](#Agradecimientos)
+
 
 
 # To-Do
-- [x] Agregar logo institucional
 - [ ] Agregar más carreras
-  - [x] Google Forms para que usuarios suban capturas de Intranet>Plan de Estudios
-  - [ ] Script en python para generar archivos de mallas
-- [x] Modificar lógica y sistema de creditos y períodos en los que se dicta el ramo
-  - [x] Remover sistema de créditos USM (solo se usa SCT ahora)
-  - [x] Remover campo de dictación ("A") de los datos
+- [ ] Implementar segundo ciclo
+  - [ ] Unificar mallas de comercial
+  - [ ] poder visualizar licenciatura + 2do ciclo + magister 
 
 
 
@@ -73,7 +71,7 @@ Con *npm* instalado en el equipo, ejecutar en una terminal los siguientes comand
 npm install
 npm run dev
 ```
-Luego, se debería ejecutar una instancia local de la página en `http://localhost:3000` o en el siguiente puerto disponible
+Luego, se debería ejecutar una instancia local de la página en `http://localhost:3000` o en el siguiente puerto disponible. 
 
 ---
-El proyecto original fue creado por alumnos de la Universidad Técnica Federico Santa María.
+El [proyecto original](https://github.com/BooterMan98/malla-interactiva) fue creado por alumnos de la Universidad Técnica Federico Santa María.
