@@ -1,7 +1,17 @@
 # Malla interactiva UAI
+<div align="center">
 
-Adaptación del visualizador de mallas interactivo para la Universidad Adolfo Ibáñez. El proyecto original fue creado para la Universidad Técnica Federico Santa María.
+WebApp para visualizar la malla curricular de tu carrera.
 
+<br>
+
+![GitHub top language](https://img.shields.io/github/languages/top/svaldesoliva/malla-interactiva-uai?style=flat-square) 
+![GitHub license](https://img.shields.io/github/license/svaldesoliva/malla-interactiva-uai?style=flat-square&color=green)
+![Website](https://img.shields.io/website?label=malla-interactiva&style=flat-square&url=https%3A%2F%2Fmallauai.app%2F)
+
+![Screenshot](public/assets/screenshot.png)
+
+</div>
 # Índice
 0. [To-Do](#To-Do)
 1. [Características de la malla](#Características-de-la-malla)
@@ -66,3 +76,4 @@ npm run dev
 Luego, se debería ejecutar una instancia local de la página en `http://localhost:3000` o en el siguiente puerto disponible
 
 ---
+El proyecto original fue creado por alumnos de la Universidad Técnica Federico Santa María.
