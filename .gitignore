@@ -51,3 +51,6 @@ temp/
 # Package manager locks (keep package-lock.json but ignore others)
 yarn.lock
 pnpm-lock.yaml
+
+# Carrera para testear cosas por si acaso
+public/data/test/

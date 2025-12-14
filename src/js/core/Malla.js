@@ -78,8 +78,8 @@ class Malla {
             this.fullCareerName = fullCareerName
             let promises = [];
     
-            promises.push(d3.json( relaPath + "data/data_" + this.currentMalla + ".json"));
-            promises.push(d3.json( relaPath + "data/colors_" + this.currentMalla + ".json"));
+            promises.push(d3.json( relaPath + "data/" + this.currentMalla + "/data_" + this.currentMalla + ".json"));
+            promises.push(d3.json( relaPath + "data/" + this.currentMalla + "/colors_" + this.currentMalla + ".json"));
             // Wait for both files to load, then initialize malla with the data
             return Promise.all(promises).then(values => {this.setMallaAndCategories(values[0], values[1])})
 
