@@ -32,7 +32,7 @@ function checkDependencies() {
     execSync('npx terser --version', { stdio: 'ignore' });
     return true;
   } catch (error) {
-    console.error('❌ Error: terser is not installed.');
+    console.error('Error: terser is not installed.');
     console.error('Run: npm install');
     process.exit(1);
   }
@@ -41,7 +41,7 @@ function checkDependencies() {
 // Ensure directories exist
 function ensureDirectories() {
   if (!fs.existsSync(SRC_JS)) {
-    console.error(`❌ Error: Source directory not found: ${SRC_JS}`);
+    console.error(`Error: Source directory not found: ${SRC_JS}`);
     process.exit(1);
   }
   if (!fs.existsSync(OUT)) {
@@ -53,8 +53,6 @@ function ensureDirectories() {
 function minifyJS(inputFiles, outputFile, options = {}) {
   const { compress = true, mangle = true } = options;
   
-  console.log(`📦 Bundling: ${outputFile}`);
-  
   const flags = [];
   if (compress) flags.push('-c');
   if (mangle) flags.push('-m');
@@ -62,10 +60,9 @@ function minifyJS(inputFiles, outputFile, options = {}) {
   const cmd = `npx terser ${inputFiles.join(' ')} ${flags.join(' ')} -o ${outputFile}`;
   
   try {
-    execSync(cmd, { stdio: 'inherit' });
-    console.log(`✅ Created: ${outputFile}`);
+    execSync(cmd, { stdio: 'ignore' });
   } catch (error) {
-    console.error(`❌ Error creating ${outputFile}`);
+    console.error(`Error creating ${outputFile}`);
     throw error;
   }
 }
@@ -85,11 +82,6 @@ const BUNDLES = [
 
 // Main build function
 function build(mode = 'development') {
-  console.log('\n🚀 Starting build process...');
-  console.log(`📂 Source: ${SRC_JS}`);
-  console.log(`📂 Output: ${OUT}`);
-  console.log(`🔧 Mode: ${mode}\n`);
-
   checkDependencies();
   ensureDirectories();
 
@@ -102,21 +94,16 @@ function build(mode = 'development') {
   const initOut = path.join(OUT, 'init.js');
   
   if (mode === 'development') {
-    console.log('📋 Copying source files for development...');
     fs.copyFileSync(mallaSrc, mallaOut);
     fs.copyFileSync(ramoSrc, ramoOut);
     fs.copyFileSync(initSrc, initOut);
-    console.log('✅ Source files copied (unminified)\n');
   } else {
-    console.log('🗜️  Minifying source files for production...');
     minifyJS([mallaSrc], mallaOut);
     minifyJS([ramoSrc], ramoOut);
     minifyJS([initSrc], initOut);
-    console.log('');
   }
 
   // Copy views to public
-  console.log('📋 Copying views to public...');
   if (!fs.existsSync(PUBLIC_VIEWS)) {
     fs.mkdirSync(PUBLIC_VIEWS, { recursive: true });
   }
@@ -127,10 +114,8 @@ function build(mode = 'development') {
       path.join(PUBLIC_VIEWS, file)
     );
   });
-  console.log('✅ Views copied\n');
 
   // Copy CSS to public
-  console.log('📋 Copying CSS to public...');
   if (!fs.existsSync(PUBLIC_CSS)) {
     fs.mkdirSync(PUBLIC_CSS, { recursive: true });
   }
@@ -141,17 +126,14 @@ function build(mode = 'development') {
       path.join(PUBLIC_CSS, file)
     );
   });
-  console.log('✅ CSS copied\n');
 
   // Build all bundles
-  console.log('📦 Building bundles...\n');
   
   for (const bundle of BUNDLES) {
     // Check if all input files exist
     const missingFiles = bundle.inputs.filter(f => !fs.existsSync(f));
     if (missingFiles.length > 0) {
-      console.warn(`⚠️  Skipping ${bundle.name}: Missing files:`);
-      missingFiles.forEach(f => console.warn(`   - ${path.basename(f)}`));
+      console.error(`Error: Skipping ${bundle.name} - missing files: ${missingFiles.map(f => path.basename(f)).join(', ')}`);
       continue;
     }
 
@@ -162,14 +144,12 @@ function build(mode = 'development') {
         { compress: mode === 'production', mangle: mode === 'production' }
       );
     } catch (error) {
-      console.error(`❌ Failed to build ${bundle.name}`);
+      console.error(`Error: Failed to build ${bundle.name}`);
       if (mode === 'production') {
         process.exit(1);
       }
     }
   }
-
-  console.log('\n✨ Build complete!\n');
 }
 
 // CLI
@@ -195,6 +175,6 @@ Examples:
 try {
   build(mode);
 } catch (error) {
-  console.error('\n❌ Build failed:', error.message);
+  console.error('Build failed:', error.message);
   process.exit(1);
 }

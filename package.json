@@ -14,15 +14,11 @@
   "scripts": {
     "build": "node scripts/build.js --production",
     "build:dev": "node scripts/build.js",
-    "build:legacy": "./scripts/minify_code.sh",
-    "devBuild": "./scripts/minify_dev.sh",
-    "gbpages": "./scripts/minify_GBPages.sh",
-    "clean": "npm prune --production",
+    "deploy": "./scripts/minify_GBPages.sh",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prestart": "npm run build:dev",
     "start": "browser-sync start --config bs-config.js",
     "dev": "npm run build:dev && npm start",
-    "cleanDev": "./scripts/clean.sh",
     "lint": "eslint src/js/**/*.js",
     "lint:fix": "eslint src/js/**/*.js --fix"
   },
