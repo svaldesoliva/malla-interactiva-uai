@@ -111,19 +111,19 @@ if (!carr)
             if (career['Link'] === carr) {
                 fullCareerName = career["Nombre"]
                 welcomeTexts["welcomeTitle"] = welcomeTexts["welcomeTitle"].replace("CARRERA", career['Nombre'])
-                $('.carrera').text(career['Nombre'])
+                document.querySelectorAll('.carrera').forEach(el => el.textContent = career['Nombre'])
                 let title = document.title.slice(0, 17)
                 title += " " + career['Nombre']
                 title += document.title.slice(17)
                 document.title = title
             }
         });
-        $('#carreras1-nav').append(careers.map(function (values) {
+        document.getElementById('carreras1-nav').insertAdjacentHTML('beforeend', careers.map(function (values) {
             return tabTpl1.map(render(values)).join('');
-        }));
-        $('#carreras2-nav').append(careers.map(function (values) {
+        }).join(''));
+        document.getElementById('carreras2-nav').insertAdjacentHTML('beforeend', careers.map(function (values) {
             return tabTpl2.map(render(values)).join('');
-        }));
+        }).join(''));
         if ( document.querySelector(".overlay-content h1")){
             document.querySelector(".overlay-content h1").textContent = welcomeTexts["welcomeTitle"]
             document.querySelector(".overlay-content h5").textContent = welcomeTexts["welcomeDesc"]
@@ -141,7 +141,7 @@ function removePopUp() {
     })
 }
 
-  $(function () {
+  document.addEventListener('DOMContentLoaded', function () {
       document.getElementById("creditsExample").textContent = "Créditos SCT";
 
 

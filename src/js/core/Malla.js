@@ -649,8 +649,13 @@ class Malla {
                 console.log(this.generatedCode[0])
                 this.generatedCode[0] = input.target.value
 
-                $('[data-toggle="tooltip"]').tooltip()
-                $('[data-toggle="tooltip"]').tooltip('disable')
+                // Bootstrap 5 tooltip initialization
+                const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+                const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => {
+                    const tooltip = new bootstrap.Tooltip(tooltipTriggerEl)
+                    tooltip.disable()
+                    return tooltip
+                })
 
 
                 let downloadLink3 = document.getElementById('dShare')

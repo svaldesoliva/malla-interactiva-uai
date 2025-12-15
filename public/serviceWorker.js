@@ -80,15 +80,11 @@ if (workbox) {
         new workbox.strategies.StaleWhileRevalidate(),
     );
     workbox.routing.registerRoute(
-        "https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css",
+        "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css",
         new workbox.strategies.StaleWhileRevalidate(),
     );
     workbox.routing.registerRoute(
-        "https://code.jquery.com/jquery-3.7.1.min.js",
-        new workbox.strategies.StaleWhileRevalidate(),
-    );
-    workbox.routing.registerRoute(
-        "https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js",
+        "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js",
         new workbox.strategies.StaleWhileRevalidate(),
     );
     workbox.routing.registerRoute(
