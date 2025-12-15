@@ -76,19 +76,23 @@ importScripts("https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox
 if (workbox) {
     console.log("Yay! Workbox is loaded 🎉");
     workbox.routing.registerRoute(
-        "https://d3js.org/d3.v5.min.js",
+        "https://d3js.org/d3.v7.min.js",
         new workbox.strategies.StaleWhileRevalidate(),
     );
     workbox.routing.registerRoute(
-        "https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css",
+        "https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css",
         new workbox.strategies.StaleWhileRevalidate(),
     );
     workbox.routing.registerRoute(
-        "https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js",
+        "https://code.jquery.com/jquery-3.7.1.min.js",
         new workbox.strategies.StaleWhileRevalidate(),
     );
     workbox.routing.registerRoute(
-        "https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js",
+        "https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js",
+        new workbox.strategies.StaleWhileRevalidate(),
+    );
+    workbox.routing.registerRoute(
+        "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css",
         new workbox.strategies.StaleWhileRevalidate(),
     );
     workbox.routing.registerRoute(

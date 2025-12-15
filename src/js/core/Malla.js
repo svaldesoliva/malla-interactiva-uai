@@ -223,8 +223,8 @@ class Malla {
                     .attr('text-anchor', 'middle');
                 desc.text("Año " + currentYear + " 1/2")
                 // Evento en caso de hacer click en el
-                yearIndicator.on("click", () => {
-                    let bar = d3.select(d3.event.currentTarget)
+                yearIndicator.on("click", (event) => {
+                    let bar = d3.select(event.currentTarget)
                     let number = parseInt(bar.select("text").text().substr(4));
                     let ramosToSelect;
                 if (bar.node().getBBox().width <= this.subjectType.getDisplayWidth(this.scaleX) * 2 - this.subjectType.getDisplayWidth(this.scaleX) / 2) {
@@ -299,8 +299,8 @@ class Malla {
                 .attr("dominant-baseline", "central")
                 .attr('text-anchor', 'middle');
             // evento en caso de clickear la barra del semestre
-            semesterIndicator.on("click", () => {
-                let bar = d3.select(d3.event.currentTarget)
+            semesterIndicator.on("click", (event) => {
+                let bar = d3.select(event.currentTarget)
                 let semNumber = this.deRomanize(bar.select("text").text());
                 if (semester[0] === "s")
                     semNumber = "s" + semNumber
