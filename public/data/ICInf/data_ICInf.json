@@ -38,7 +38,7 @@
 		["Minería de Datos", "TICS411", 6, "TICS", ["TICS314"]],
 		["Lenguajes y Paradigmas de Programación", "TICS200", 6, "TICS", ["TICS100"]],
 		["Estructura de Datos y Algoritmos", "TICS311", 6, "TICS", ["TICS100", "MAT113"]],
-		["Bases de Datos", "TICS320", 6, "TICS", ["TICS100", "MAT113"]],
+		["Bases de Datos", "TICS320", 4, "TICS", ["TICS100", "MAT113"]],
 		["Optimización", "ING200", 6, "PC", ["MAT203"]],
 		["Educación Física V", "GYM105", 1, "AC", []]
 	],
@@ -63,7 +63,7 @@
 		["Seguridad en TI", "TICS413", 6, "TICS", ["TICS304"]],
 		["Arquitectura Cloud", "TICS400", 6, "TICS", ["TICS317", "TICS313"]],
 		["Sistemas Operativos", "TICS312", 6, "TICS", ["TICS311"]],
-		["Capstone Project", "TEI401", 6, "PC", ["TEI301"]],
+		["Capstone Project", "TEI401", 4, "PC", ["TEI301"]],
 		["Liderazgo", "LID100", 1, "AC", []],
 		["Programación Profesional", "TICS420", 6, "TICS", ["TICS200"]]
 	]
