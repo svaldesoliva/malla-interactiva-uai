@@ -368,34 +368,17 @@ class Ramo {
         // Convert hex to RGB first
         let r = 0, g = 0, b = 0;
         if (colorHex.length === 4) {
-            r = "0x" + colorHex[1] + colorHex[1];
-            g = "0x" + colorHex[2] + colorHex[2];
-            b = "0x" + colorHex[3] + colorHex[3];
+            r = parseInt(colorHex[1] + colorHex[1], 16);
+            g = parseInt(colorHex[2] + colorHex[2], 16);
+            b = parseInt(colorHex[3] + colorHex[3], 16);
         } else if (colorHex.length === 7) {
-            r = "0x" + colorHex[1] + colorHex[2];
-            g = "0x" + colorHex[3] + colorHex[4];
-            b = "0x" + colorHex[5] + colorHex[6];
+            r = parseInt(colorHex[1] + colorHex[2], 16);
+            g = parseInt(colorHex[3] + colorHex[4], 16);
+            b = parseInt(colorHex[5] + colorHex[6], 16);
         }
-        // console.log(r,g,b)
-        // Then to HSL
-        let rgb = [0, 0, 0];
-        rgb[0] = r / 255;
-        rgb[1] = g / 255;
-        rgb[2] = b / 255;
-
-        for (let color in rgb) {
-            if (rgb[color] <= 0.03928) {
-                rgb[color] /= 12.92
-            } else {
-                rgb[color] = Math.pow(((rgb[color] + 0.055) / 1.055), 2.4)
-            }
-
-        }
-
-        // c <= 0.03928 then c = c/12.92 else c = ((c+0.055)/1.055) ^ 2.4
-        let l = 0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2];
-        // console.log(l)
-        return l <= 0.6; // este valor deberia ser mas bajo según estandares...
+        
+        let yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+        return yiq < 128;
     }
 
 }

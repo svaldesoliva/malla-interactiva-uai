@@ -18,20 +18,6 @@
 
 
 
-let vh = window.innerHeight * 0.01;
-// Then we set the value in the --vh custom property to the root of the document
-document.documentElement.style.setProperty('--vh', `${vh}px`);
-window.addEventListener('resize', () => {
-    // We execute the same script as before
-    let vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
-});
-
-function render(props) {
-    return function(tok, i) {
-        return (i % 2) ? props[tok] : tok;
-    };
-}
 let relaPath = './'
 let fullCareerName = ""
 let texts = "Malla"
@@ -104,9 +90,6 @@ if (!carr)
         home.setAttribute("href", relaPath + '?m=' + carr)
         return fetch(relaPath + '/data/carreras.json')
     }).then(response => response.json()).then((careers,) => {
-        let tabTpl1 = document.querySelector('script[data-template="tab-template1"]').text.split(/\${(.+?)}/g);
-        let tabTpl2 = document.querySelector('script[data-template="tab-template2"]').text.split(/\${(.+?)}/g);
-
         careers.forEach(career => {
             if (career['Link'] === carr) {
                 fullCareerName = career["Nombre"]
@@ -119,10 +102,10 @@ if (!carr)
             }
         });
         document.getElementById('carreras1-nav').insertAdjacentHTML('beforeend', careers.map(function (values) {
-            return tabTpl1.map(render(values)).join('');
+            return `<li><a class="nav-item nav-link" href="?m=${values.Link}"><span class="d-md-none">Malla </span>${values.Nombre}</a></li>`;
         }).join(''));
         document.getElementById('carreras2-nav').insertAdjacentHTML('beforeend', careers.map(function (values) {
-            return tabTpl2.map(render(values)).join('');
+            return `<a class="dropdown-item" href="?m=${values.Link}">Malla ${values.Nombre}</a>`;
         }).join(''));
         if ( document.querySelector(".overlay-content h1")){
             document.querySelector(".overlay-content h1").textContent = welcomeTexts["welcomeTitle"]
