@@ -7,30 +7,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 
 
-/* Exclusivo para la "card" de prioridad y personalizar */
-/* Aqui ocurre el quiebre de la fila */
-@media (max-width: 1199.95px) {
-    /* Por alguna razon ocurre antes */
-    #priorix {
-        width: initial;
-    }
 
-    .subjectContainer {
-        height: initial;
-        overflow: initial;
-    }
-}
-@media (min-width: 1200px) {
-    #priorix {
-        width: 450px;
-    }
-
-    .subjectContainer {
-        height: 360px;
-        overflow: auto;
-
-    }
-}
 
 /* General */
 body {
@@ -44,29 +21,7 @@ hr {
     margin-right: 0;
 }
 
-.card-sticky-top {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
-    z-index: 2;
-    -webkit-backdrop-filter: blur(15px);
-    backdrop-filter: blur(15px);
-}
 
-.card-sticky-bottom {
-    position: -webkit-sticky;
-    position: sticky;
-    bottom: 0;
-    z-index: 1;
-    -webkit-backdrop-filter: blur(15px);
-    backdrop-filter: blur(15px);
-}
-
-.priorix-result {
-    position: -webkit-sticky;
-    position: sticky;
-    bottom: 0;
-}
 header {
     min-height: 56px;
 }
@@ -173,14 +128,7 @@ header {
 sector:hover .text-white {
     filter: brightness(85%);
 }
-@supports not ((backdrop-filter: none) or (-webkit-backdrop-filter: none) ){
-    .overlay, .card-sticky-top, .card-sticky-bottom {
-        background: rgba(255, 255, 255, 0.95);
-    }
-    .overlay-content h3, .overlay-content h5 {
-        opacity: initial;
-    }
-}
+
 
 /* Dark Mode */
 @media(prefers-color-scheme: dark) {
@@ -220,14 +168,5 @@ sector:hover .text-white {
 
     .overlay-content h3, .overlay-content h5 {
         opacity: .4;
-    }
-
-    @supports not ((backdrop-filter: none) or (-webkit-backdrop-filter: none) ) {
-        .overlay, .card-sticky-top, .card-sticky-bottom {
-            background: rgba(14, 14, 14, 0.95);
-        }
-        .overlay-content h3, .overlay-content h5 {
-            opacity: initial;
-        }
     }
 }

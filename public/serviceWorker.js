@@ -85,14 +85,7 @@ if (workbox) {
         "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css",
         new workbox.strategies.StaleWhileRevalidate(),
     );
-    workbox.routing.registerRoute(
-        "https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js",
-        new workbox.strategies.StaleWhileRevalidate(),
-    );
-    workbox.routing.registerRoute(
-        "https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll/dist/smooth-scroll.polyfills.min.js",
-        new workbox.strategies.StaleWhileRevalidate(),
-    );
+
 } else {
     console.log("Boo! Workbox didn't load 😬");
 
