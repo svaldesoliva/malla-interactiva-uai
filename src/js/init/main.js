@@ -21,8 +21,7 @@
 let relaPath = './'
 let fullCareerName = ""
 let texts = "Malla"
-// Disabled due to safari bug
-/*if ('serviceWorker' in navigator) {
+if ('serviceWorker' in navigator) {
     console.log("Service worker compatible")
     window.addEventListener('load', function() {
         navigator.serviceWorker.register(relaPath + 'serviceWorker.js').then(function(registration) {
@@ -33,7 +32,7 @@ let texts = "Malla"
             console.log('ServiceWorker registration failed: ', err);
         });
     });
-}*/
+}
 
 let params = new URLSearchParams(window.location.search)
 

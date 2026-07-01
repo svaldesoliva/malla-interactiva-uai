@@ -56,7 +56,9 @@ class Ramo {
     draw(canvas, posX, posY, scaleX, scaleY) {
         this.ramo = canvas.append('g')
             .attr("cursor", "pointer")
-            .attr("role", "img")
+            .attr("role", "button")
+            .attr("tabindex", "0")
+            .attr("aria-pressed", "false")
             .classed("subject", true)
             // .attr("alt", "Texto de prueba")
             .attr('id', this.sigla);
@@ -239,6 +241,12 @@ class Ramo {
     // Crea las reacciones a las interacciones del usuario
     createActionListeners() {
         this.ramo.on("click", () => this.isBeingClicked());
+        this.ramo.on("keydown", (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                this.isBeingClicked();
+            }
+        });
     }
 
     // se llama cuando se pulsa del ramo
@@ -255,10 +263,12 @@ class Ramo {
             if (!this.isCustom)
                 d3.select("#" + this.sigla).select(".cross").transition().delay(20).attr("opacity", "1");
             this.malla.approveSubject(this)
+            this.ramo.attr("aria-pressed", "true")
         } else {
             if (!this.isCustom)
                 d3.select("#" + this.sigla).select(".cross").transition().delay(20).attr("opacity", "0.01");
             this.malla.deApproveSubject(this)
+            this.ramo.attr("aria-pressed", "false")
             }
         this.approved = !this.approved;
     }

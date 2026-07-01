@@ -8,15 +8,9 @@ const PRECACHE_URLS = [
     "./",
     "./views/header.html",
     "./views/footer.html",
-    "./js/min1.js",
-    "./js/malla.js",
-    "./js/ramo.js",
-    "./js/init.js",
-    "./css/darkMode.css",
-    "./css/prettify.css",
     "./css/styles.css",
+    "./js/min1.js",
     "./data/carreras.json"
-
 ];
 
 // The activate handler takes care of cleaning up old caches.
