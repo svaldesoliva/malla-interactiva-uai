@@ -73,17 +73,15 @@ if (!carr)
     })
     let fileURL = relaPath + "data/welcomeTexts.json"
     promises.push(fetch(fileURL).then(response => response.json()))
-    Promise.all(promises)
-        .then( () => {
-            return fetch(new Request(relaPath + "date.txt"))
-        }).then(response => {
+    Promise.all(promises).then((datas) => {
+        fetch(new Request(relaPath + "date.txt")).then(response => {
             console.log(response)
             let lastModified = response.headers.get("last-modified")
             let date = new Date(lastModified)
             console.log(date)
             document.getElementById("lastUpdate").textContent = date.toLocaleString()
-        })
-    Promise.all(promises).then((datas) => {
+        });
+
         welcomeTexts = datas.pop()[texts]
 
         let home = document.getElementById("goToHome")
@@ -95,10 +93,7 @@ if (!carr)
                 fullCareerName = career["Nombre"]
                 welcomeTexts["welcomeTitle"] = welcomeTexts["welcomeTitle"].replace("CARRERA", career['Nombre'])
                 document.querySelectorAll('.carrera').forEach(el => el.textContent = career['Nombre'])
-                let title = document.title.slice(0, 17)
-                title += " " + career['Nombre']
-                title += document.title.slice(17)
-                document.title = title
+                document.title = "Malla interactiva " + career['Nombre'] + " UAI"
             }
         });
         document.getElementById('carreras1-nav').insertAdjacentHTML('beforeend', careers.map(function (values) {
@@ -146,9 +141,7 @@ function removePopUp() {
               malla.enablePrerCheck()
           })
       })
-      drawnMalla.then(() => {
-          malla.generateCode()
-      })
+
   });
 
 // Credit system toggle removed - only SCT credits are used

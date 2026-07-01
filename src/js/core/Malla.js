@@ -31,9 +31,7 @@ class Malla {
         this.totalCredits = 0;
         this.totalSubjects = 0;
 
-        if (document.getElementById("loadfile")) {
-            document.getElementById("loadfile").addEventListener("click", this.loadFile.bind(this))
-        }
+
 
     }
 
@@ -443,23 +441,5 @@ class Malla {
         return r_nums[arabic] || arabic.toString();
     }
 
-    loadFile(e) {
-        let input = document.createElement('input');
-        input.type = 'file';
-        input.accept = '.json'
-        input.multiple = false
-        var reader = new FileReader();
-        reader.addEventListener("load", function (e) {
-            localStorage["sharedMalla"] = e.target.result;
-            location.reload()
-        });
-    
-        input.onchange = _this => {
-            let files =   Array.from(input.files);
-                reader.readAsText(files[0]);
-    
-              };
-        input.click();
-    
-    }
+
 }
