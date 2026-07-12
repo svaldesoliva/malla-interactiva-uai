@@ -1,7 +1,8 @@
 [
   {
     "Nombre": "Ingeniería Civil en Informática",
-    "Link": "ICInf"
+    "Link": "ICInf",
+    "Base": "PlanComunIng"
   },
   {
       "Nombre": "Ingeniería Comercial: Lic. Administración",
