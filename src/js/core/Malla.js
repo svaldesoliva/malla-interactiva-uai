@@ -98,7 +98,8 @@ class Malla {
                         let baseSem = baseData[sem] || [];
                         let specSem = specificData[sem] || [];
                         
-                        let mergedSem = [...baseSem];
+                        // Filter out ESP placeholders from base when merging with a specialty
+                        let mergedSem = baseSem.filter(c => c[3] !== "ESP");
                         specSem.forEach(specCourse => {
                             let existingIdx = mergedSem.findIndex(c => c[1] === specCourse[1]);
                             if (existingIdx !== -1) {

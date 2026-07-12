@@ -176,7 +176,9 @@ class Ramo {
                 .attr("font-size", scaleX < 0.85 ? 11 : 12);
         }
 
-        this.drawActions(posX, posY, sizeX, sizeY);
+        if (!isPlaceholder) {
+            this.drawActions(posX, posY, sizeX, sizeY);
+        }
 
 
         if (!isPlaceholder) {
@@ -308,7 +310,7 @@ class Ramo {
 
     // Se verifica que el ramo tenga los prerrequisitos cumplidos
     verifyPrer() {
-        if (this.isCustom)
+        if (this.isCustom || this.category === "ESP")
             return;
         let _a = [];
         this.malla.APPROVED.forEach(function(ramo) {
