@@ -58,7 +58,7 @@ class Malla {
      * @param {string} relaPath - Relative path to data files
      * @returns {Promise} Promise that resolves when malla data is loaded
      */
-    setCareer(carr, fullCareerName, relaPath) {
+    setCareer(carr, fullCareerName, relaPath, baseCarr = null) {
         // Check if there's a shared malla saved in localStorage (e.g., from URL sharing)
         if (localStorage["sharedMalla"] != undefined) {
             let unparsedData = localStorage["sharedMalla"]
@@ -75,11 +75,62 @@ class Malla {
             this.currentMalla = carr;
             this.fullCareerName = fullCareerName
             let promises = [];
+            
+            if (baseCarr) {
+                promises.push(d3.json( relaPath + "data/" + baseCarr + "/data_" + baseCarr + ".json"));
+                promises.push(d3.json( relaPath + "data/" + baseCarr + "/colors_" + baseCarr + ".json"));
+            }
     
             promises.push(d3.json( relaPath + "data/" + this.currentMalla + "/data_" + this.currentMalla + ".json"));
             promises.push(d3.json( relaPath + "data/" + this.currentMalla + "/colors_" + this.currentMalla + ".json"));
             // Wait for both files to load, then initialize malla with the data
-            return Promise.all(promises).then(values => {this.setMallaAndCategories(values[0], values[1])})
+            return Promise.all(promises).then(values => {
+                if (baseCarr) {
+                    let baseData = values[0];
+                    let baseColors = values[1];
+                    let specificData = values[2];
+                    let specificColors = values[3];
+                    
+                    let mergedData = {};
+                    let allSemesters = new Set([...Object.keys(baseData), ...Object.keys(specificData)]);
+                    
+                    allSemesters.forEach(sem => {
+                        let baseSem = baseData[sem] || [];
+                        let specSem = specificData[sem] || [];
+                        
+                        let mergedSem = [...baseSem];
+                        specSem.forEach(specCourse => {
+                            let existingIdx = mergedSem.findIndex(c => c[1] === specCourse[1]);
+                            if (existingIdx !== -1) {
+                                mergedSem[existingIdx] = specCourse;
+                            } else {
+                                mergedSem.push(specCourse);
+                            }
+                        });
+                        
+                        // Order: CORE > Especialidad > Plan comun
+                        mergedSem.sort((a, b) => {
+                            let catA = a[3];
+                            let catB = b[3];
+                            
+                            let getPriority = (cat) => {
+                                if (cat === "CORE") return 1;
+                                if (cat === "PC" || cat === "AC") return 3;
+                                return 2; // Specialty
+                            };
+                            
+                            return getPriority(catA) - getPriority(catB);
+                        });
+                        
+                        mergedData[sem] = mergedSem;
+                    });
+                    
+                    let mergedColors = Object.assign({}, baseColors, specificColors);
+                    this.setMallaAndCategories(mergedData, mergedColors);
+                } else {
+                    this.setMallaAndCategories(values[0], values[1]);
+                }
+            })
 
         }
     }
