@@ -12,8 +12,9 @@
 	"s6": [
 		["Inteligencia Artificial", "TICS315", 6, "TICS", ["TICS411"]],
 		["Diseño de Software", "TICS316", 6, "TICS", ["TICS200"]],
-		["Redes de Computadores", "TICS313", 6, "TICS", ["TICS100", "EST211"]]
-	],
+		["Redes de Computadores", "TICS313", 6, "TICS", ["TICS100", "EST211"]],
+        ["Principios de Economía", "ECO110", 6, "PC", ["ING200"]]
+    ],
 	"s7": [
 		["Sistemas de Información", "TICS304", 6, "TICS", ["TICS100"]],
 		["Arquitectura de Software", "TICS317", 6, "TICS", ["TICS320"]],
