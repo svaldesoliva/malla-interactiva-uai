@@ -36,21 +36,37 @@
 	"s5": [
 		["Core Ciencias", "CORE302", 4, "CORE", ["CORE102"]],
 		["Optimización", "ING200", 6, "PC", ["MAT203"]],
+		["ESPECIALIDAD 1", "ESP100", 0, "ESP", []],
+		["ESPECIALIDAD 2", "ESP102", 0, "ESP", []],
+		["ESPECIALIDAD 3", "ESP103", 0, "ESP", []],
+		["ESPECIALIDAD 4", "ESP104", 0, "ESP", []],
 		["Educación Física V", "GYM105", 1, "AC", []]
 	],
 	"s6": [
 		["Core Ética", "CORE301", 4, "CORE", ["CORE102"]],
 		["Principios de Economía", "ECO110", 6, "PC", ["ING200"]],
 		["Taller de Innovación y Emprendimiento", "TEI301", 4, "PC", ["TEI201"]],
+		["ESPECIALIDAD 5", "ESP105", 0, "ESP", []],
+		["ESPECIALIDAD 6", "ESP106", 0, "ESP", []],
+		["ESPECIALIDAD 7", "ESP107", 0, "ESP", []],
+		["ESPECIALIDAD 8", "ESP108", 0, "ESP", []],
 		["Educación Física VI", "GYM106", 1, "AC", []]
 	],
 	"s7": [
 		["Core Arte y Humanidades", "CORE304", 4, "CORE", ["CORE202"]],
 		["Formulación y Evaluación de Proyectos", "ECO216", 6, "PC", ["ECO110"]],
+		["ESPECIALIDAD 9", "ESP109", 0, "ESP", []],
+		["ESPECIALIDAD 10", "ESP110", 0, "ESP", []],
+		["ESPECIALIDAD 11", "ESP111", 0, "ESP", []],
+		["ESPECIALIDAD 12", "ESP112", 0, "ESP", []],
 		["Taller de Expresión Oral II", "LING112", 1, "AC", ["LING111"]]
 	],
 	"s8": [
 		["Capstone Project", "TEI401", 4, "PC", ["TEI301"]],
+		["ESPECIALIDAD 13", "ESP113", 0, "ESP", []],
+		["ESPECIALIDAD 14", "ESP114", 0, "ESP", []],
+		["ESPECIALIDAD 15", "ESP115", 0, "ESP", []],
+		["ESPECIALIDAD 16", "ESP116", 0, "ESP", []],
 		["Liderazgo", "LID100", 1, "AC", []]
 	]
 }

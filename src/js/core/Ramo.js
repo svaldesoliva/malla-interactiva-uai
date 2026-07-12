@@ -54,10 +54,12 @@ class Ramo {
 
     // renderiza el ramo
     draw(canvas, posX, posY, scaleX, scaleY) {
+        let isPlaceholder = this.category === "ESP";
+        
         this.ramo = canvas.append('g')
-            .attr("cursor", "pointer")
-            .attr("role", "button")
-            .attr("tabindex", "0")
+            .attr("cursor", isPlaceholder ? "default" : "pointer")
+            .attr("role", isPlaceholder ? "presentation" : "button")
+            .attr("tabindex", isPlaceholder ? "-1" : "0")
             .attr("aria-pressed", "false")
             .classed("subject", true)
             // .attr("alt", "Texto de prueba")
@@ -82,53 +84,68 @@ class Ramo {
                 prers += ", " + prer
             counter +=1
         })
-        this.ramo.append("title").text(
-            "Ramo " + this.sigla+ ", " + this.name+ ". Este ramo tiene " + this.getCredits() + " créditos SCT" +
-            (this.prer.size ? " y tiene como prerrequisitos a " + prers : " y no tiene prerrequisitos") + ".")
+        
+        if (!isPlaceholder) {
+            this.ramo.append("title").text(
+                "Ramo " + this.sigla+ ", " + this.name+ ". Este ramo tiene " + this.getCredits() + " créditos SCT" +
+                (this.prer.size ? " y tiene como prerrequisitos a " + prers : " y no tiene prerrequisitos") + ".")
+        } else {
+            this.ramo.append("title").text(this.name);
+        }
 
-        this.ramo.append("rect")
+        let rect = this.ramo.append("rect")
             .attr("x", posX)
             .attr("y", posY)
             .attr("width", sizeX )
             .attr("height", sizeY)
-            .attr("fill", color);
+            .attr("fill", color)
+            .attr("rx", 4) // Some rounded corners look better
+            .attr("ry", 4);
+            
+        if (isPlaceholder) {
+            rect.attr("stroke", "#222222")
+                .attr("stroke-width", 2)
+                .attr("stroke-dasharray", "5,5");
+        }
 
-        // above bar
-        this.ramo.append("rect")
-            .attr("x", posX)
-            .attr("y", posY)
-            .attr("width", sizeX )
-            .attr("height", graybar)
-            .attr("fill", '#6D6E71')
-            .classed('bars', true);
-
-        // below bar
-        this.ramo.append("rect")
-            .attr("x", posX)
-            .attr("y", posY + sizeY - graybar)
-            .attr("width", sizeX )
-            .attr("height", graybar)
-            .attr("fill", '#6D6E71')
-            .classed('bars', true);
-
-        // credits rect
-        this.ramo.append("rect")
-            .attr("x", posX + sizeX  - 22 * scaleX)
-            .attr("y", posY + sizeY - graybar)
-            .attr("width", 20 * scaleX)
-            .attr("height", graybar)
-            .attr("fill", 'white');
-
-        // texto créditos
-        this.ramo.append("text")
-            .attr("x", posX + sizeX  - 22 * scaleX + 20 * scaleX / 2)
-            .attr("y", posY + sizeY - graybar / 2)
-            .text(credits)
-            .attr("font-weight", "regular")
-            .attr("fill", "black")
-            .attr("dominant-baseline", "central")
-            .attr("text-anchor", "middle")
-            .attr("font-size", 12 * scaleY);
+        if (!isPlaceholder) {
+            // above bar
+            this.ramo.append("rect")
+                .attr("x", posX)
+                .attr("y", posY)
+                .attr("width", sizeX )
+                .attr("height", graybar)
+                .attr("fill", '#6D6E71')
+                .classed('bars', true);
+    
+            // below bar
+            this.ramo.append("rect")
+                .attr("x", posX)
+                .attr("y", posY + sizeY - graybar)
+                .attr("width", sizeX )
+                .attr("height", graybar)
+                .attr("fill", '#6D6E71')
+                .classed('bars', true);
+    
+            // credits rect
+            this.ramo.append("rect")
+                .attr("x", posX + sizeX  - 22 * scaleX)
+                .attr("y", posY + sizeY - graybar)
+                .attr("width", 20 * scaleX)
+                .attr("height", graybar)
+                .attr("fill", 'white');
+    
+            // texto créditos
+            this.ramo.append("text")
+                .attr("x", posX + sizeX  - 22 * scaleX + 20 * scaleX / 2)
+                .attr("y", posY + sizeY - graybar / 2)
+                .text(credits)
+                .attr("font-weight", "regular")
+                .attr("fill", "black")
+                .attr("dominant-baseline", "central")
+                .attr("text-anchor", "middle")
+                .attr("font-size", 12 * scaleY);
+        }
 
         // Nombre ramo
         this.ramo.append("text")
@@ -138,6 +155,7 @@ class Ramo {
             .text(this.name)
             .attr("class", "ramo-label")
             .attr("fill", () => {
+                if (isPlaceholder) return "#555555";
                 if (this.needsWhiteText(color))
                     return "white";
                 return '#222222';
@@ -146,34 +164,37 @@ class Ramo {
             .attr("text-anchor", "middle")
             .attr("dominant-baseline", "central");
 
-        // Sigla
-        this.ramo.append("text")
-            .attr("x", posX + 2)
-            .attr("y", posY + 10)
-            .attr("dominant-baseline", "central")
-            .text(this.sigla)
-            .attr("font-weight", "bold")
-            .attr("fill", "white")
-            .attr("font-size", scaleX < 0.85 ? 11 : 12);
-
+        if (!isPlaceholder) {
+            // Sigla
+            this.ramo.append("text")
+                .attr("x", posX + 2)
+                .attr("y", posY + 10)
+                .attr("dominant-baseline", "central")
+                .text(this.sigla)
+                .attr("font-weight", "bold")
+                .attr("fill", "white")
+                .attr("font-size", scaleX < 0.85 ? 11 : 12);
+        }
 
         this.drawActions(posX, posY, sizeX, sizeY);
 
 
-        // id
-        this.ramo.append("circle")
-            .attr("cx", posX + sizeX  - 10)
-            .attr("cy", posY + graybar / 2)
-            .attr("fill", "white")
-            .attr("r", 8);
-        this.ramo.append("text")
-            .attr("x", posX + sizeX  - 10)
-            .attr("y", posY + graybar / 2)
-            .attr("dominant-baseline", "central")
-            .attr("text-anchor", "middle")
-            .attr("fill", "black")
-            .attr('font-size', 10)
-            .text(this.id);
+        if (!isPlaceholder) {
+            // id
+            this.ramo.append("circle")
+                .attr("cx", posX + sizeX  - 10)
+                .attr("cy", posY + graybar / 2)
+                .attr("fill", "white")
+                .attr("r", 8);
+            this.ramo.append("text")
+                .attr("x", posX + sizeX  - 10)
+                .attr("y", posY + graybar / 2)
+                .attr("dominant-baseline", "central")
+                .attr("text-anchor", "middle")
+                .attr("fill", "black")
+                .attr('font-size', 10)
+                .text(this.id);
+        }
 
         // Prerequisite indicator circles - shows which subjects must be completed first
         let c_x = 0;
@@ -213,7 +234,11 @@ class Ramo {
             // Move position for next circle horizontally
             c_x += r * 2;
         });
-        this.createActionListeners();
+        
+        if (!isPlaceholder) {
+            this.createActionListeners();
+        }
+        
         this.wrap(sizeX - 5, sizeY / 5 * 3);
     }
 

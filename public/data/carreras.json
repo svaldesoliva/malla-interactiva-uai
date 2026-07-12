@@ -1,6 +1,10 @@
 [
   {
-    "Nombre": "Ingeniería Civil en Informática",
+    "Nombre": "Plan Común de Ingeniería",
+    "Link": "PlanComunIng"
+  },
+  {
+    "Nombre": "Ingeniería Civil Informática",
     "Link": "ICInf",
     "Base": "PlanComunIng"
   },
