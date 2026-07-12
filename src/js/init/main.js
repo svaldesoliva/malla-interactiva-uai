@@ -72,7 +72,7 @@ if (!carr)
     })
     let fileURL = relaPath + "data/welcomeTexts.json"
     promises.push(fetch(fileURL).then(response => response.json()))
-    Promise.all(promises).then((datas) => {
+    let careersPromise = Promise.all(promises).then((datas) => {
         fetch(new Request(relaPath + "date.txt")).then(response => {
             console.log(response)
             let lastModified = response.headers.get("last-modified")
@@ -86,7 +86,9 @@ if (!carr)
         let home = document.getElementById("goToHome")
         home.setAttribute("href", relaPath + '?m=' + carr)
         return fetch(relaPath + '/data/carreras.json')
-    }).then(response => response.json()).then((careers,) => {
+    }).then(response => response.json());
+    
+    careersPromise.then((careers,) => {
         careers.forEach(career => {
             if (career['Link'] === carr) {
                 fullCareerName = career["Nombre"]
@@ -121,26 +123,27 @@ function removePopUp() {
   document.addEventListener('DOMContentLoaded', function () {
       document.getElementById("creditsExample").textContent = "Créditos SCT";
 
+      careersPromise.then((careers) => {
+          let malla = new Malla();
+          malla.enableCreditsStats()
+          malla.enableCreditsSystem()
+          malla.enableSave()
+          document.getElementById("cleanApprovedButton").addEventListener("click", () => malla.cleanSubjects())
 
-      let malla = new Malla();
-      malla.enableCreditsStats()
-      malla.enableCreditsSystem()
-      malla.enableSave()
-      document.getElementById("cleanApprovedButton").addEventListener("click", () => malla.cleanSubjects())
-
-      let drawnMalla = malla.setCareer(carr, fullCareerName, relaPath).then((val) => {
-          return malla.drawMalla(".canvas")
-      });
-      drawnMalla.then(() => {
-          malla.updateStats()
-          malla.displayCreditSystem()
-          malla.showColorDescriptions(".color-description")
-          document.getElementById("overlay").addEventListener("click", () => {
-              malla.loadApproved()
-              malla.enablePrerCheck()
+          let currentCareerObj = careers.find(c => c.Link === carr);
+          let drawnMalla = malla.setCareer(carr, fullCareerName, relaPath, currentCareerObj ? currentCareerObj.Base : null).then((val) => {
+              return malla.drawMalla(".canvas")
+          });
+          drawnMalla.then(() => {
+              malla.updateStats()
+              malla.displayCreditSystem()
+              malla.showColorDescriptions(".color-description")
+              document.getElementById("overlay").addEventListener("click", () => {
+                  malla.loadApproved()
+                  malla.enablePrerCheck()
+              })
           })
-      })
-
+      });
   });
 
 // Credit system toggle removed - only SCT credits are used
