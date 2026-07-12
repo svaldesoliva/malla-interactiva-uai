@@ -1,0 +1,6 @@
+{
+  "CORE": ["#CC9900", "CORE"],
+  "PC": ["#0000FF", "Plan Común"],
+  "AC": ["#00FF00", "Actividades Curriculares"],
+  "DS": ["#FF00FF", "Datos"]
+}
