@@ -375,6 +375,9 @@ class Malla {
     // Renderiza las descripciones de las categorías
     showColorDescriptions() {
         Object.keys(this.categories).forEach(key => {
+            // Skip ESP placeholder category from legend
+            if (key === "ESP") return;
+            
             let color_description = d3.select(".color-description").append("div")
                 .attr("style", "display:flex;vertical-align:middle;margin-right:15px;");
             let circle_color = color_description.append("svg")
