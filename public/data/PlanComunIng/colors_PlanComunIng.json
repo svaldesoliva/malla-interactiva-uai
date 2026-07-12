@@ -1,6 +1,6 @@
 {
-  "CORE": ["#CC9900", "CORE"],
-  "PC": ["#0000FF", "Plan Común"],
-  "AC": ["#00FF00", "Actividades Curriculares"],
-  "DS": ["#FF00FF", "Datos"]
+"CORE": ["#685298", "Core Curriculum Artes Liberales"],
+"PC": ["#162b4e", "Plan Común de Ingeniería y Ciencias"],
+"DS": ["#58b3dc", "Data Science"],
+"AC": ["#706f6f", "Asignaturas Complementarias UAI"]
 }

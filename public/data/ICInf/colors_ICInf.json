@@ -1,7 +1,3 @@
 {
-"CORE": ["#685298", "Core Curriculum Artes Liberales"],
-"PC": ["#162b4e", "Plan Común de Ingeniería y Ciencias"],
-"DS": ["#58b3dc", "Data Science"],
-"TICS": ["#2a9d8f", "Informática"],
-"AC": ["#706f6f", "Asignaturas Complementarias UAI"]
+"TICS": ["#2a9d8f", "Informática"]
 }
