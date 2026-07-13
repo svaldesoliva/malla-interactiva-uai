@@ -1,13 +1,13 @@
-let width = 100;
-let height = 100;
+const width = 100;
+const height = 100;
 
 class Ramo {
     static get width() {
-        return width
+        return width;
     }
 
     static get height() {
-        return height
+        return height;
     }
 
     static getDisplayWidth(scaleX) {
@@ -28,9 +28,9 @@ class Ramo {
         this.prer = new Set(prer);
 
         // Rendering and interaction properties
-        this.malla = malla
-        this.isCustom = isCustom
-        this.beenEdited= false
+        this.malla = malla;
+        this.isCustom = isCustom;
+        this.beenEdited= false;
         this.id = id;
         this.ramo = null;
         this.approved = false;
@@ -44,56 +44,56 @@ class Ramo {
 
     // Actualiza los créditos
     updateCredits(credits) {
-        this.credits = credits
+        this.credits = credits;
     }
 
     // Retorna los creditos
     getDisplayCredits() {
-        return this.getCredits()
+        return this.getCredits();
     }
 
     // renderiza el ramo
     draw(canvas, posX, posY, scaleX, scaleY) {
-        let isPlaceholder = this.category === "ESP";
-        
-        this.ramo = canvas.append('g')
+        const isPlaceholder = this.category === "ESP";
+
+        this.ramo = canvas.append("g")
             .attr("cursor", isPlaceholder ? "default" : "pointer")
             .attr("role", isPlaceholder ? "presentation" : "button")
             .attr("tabindex", isPlaceholder ? "-1" : "0")
             .attr("aria-pressed", "false")
             .classed("subject", true)
             // .attr("alt", "Texto de prueba")
-            .attr('id', this.sigla);
+            .attr("id", this.sigla);
         // Se establecen tamaños
-        let sizeX = this.constructor.getDisplayWidth(scaleX),
+        const sizeX = this.constructor.getDisplayWidth(scaleX),
             sizeY = this.constructor.getDisplayHeight(scaleY);
-        let graybar = sizeY / 5;
-        let credits = this.getDisplayCredits(this.credits);
-        let color = this.malla.categories[this.category][0]
+        const graybar = sizeY / 5;
+        const credits = this.getDisplayCredits(this.credits);
+        const color = this.malla.categories[this.category][0];
 
-        let dictatesIn = {"":"¿ambos semestres?", "P": "semestres pares", "I": "semestres impares", "A": "ambos semestres"}
-        let prers = ""
-        let prerSize = this.prer.size - 1
-        let counter = 0
+        const dictatesIn = {"":"¿ambos semestres?", "P": "semestres pares", "I": "semestres impares", "A": "ambos semestres"};
+        let prers = "";
+        const prerSize = this.prer.size - 1;
+        let counter = 0;
         this.prer.forEach(prer => {
             if (counter === 0)
-                prers += prer
+                prers += prer;
             else if (counter === prerSize)
-                prers += " y " + prer
+                prers += ` y ${  prer}`;
             else
-                prers += ", " + prer
-            counter +=1
-        })
-        
+                prers += `, ${  prer}`;
+            counter +=1;
+        });
+
         if (!isPlaceholder) {
             this.ramo.append("title").text(
-                "Ramo " + this.sigla+ ", " + this.name+ ". Este ramo tiene " + this.getCredits() + " créditos SCT" +
-                (this.prer.size ? " y tiene como prerrequisitos a " + prers : " y no tiene prerrequisitos") + ".")
+                `Ramo ${  this.sigla }, ${  this.name }. Este ramo tiene ${  this.getCredits()  } créditos SCT${
+                    this.prer.size ? ` y tiene como prerrequisitos a ${  prers}` : " y no tiene prerrequisitos"  }.`);
         } else {
             this.ramo.append("title").text(this.name);
         }
 
-        let rect = this.ramo.append("rect")
+        const rect = this.ramo.append("rect")
             .attr("x", posX)
             .attr("y", posY)
             .attr("width", sizeX )
@@ -101,7 +101,7 @@ class Ramo {
             .attr("fill", color)
             .attr("rx", 4) // Some rounded corners look better
             .attr("ry", 4);
-            
+
         if (isPlaceholder) {
             rect.attr("stroke", "#222222")
                 .attr("stroke-width", 2)
@@ -115,26 +115,26 @@ class Ramo {
                 .attr("y", posY)
                 .attr("width", sizeX )
                 .attr("height", graybar)
-                .attr("fill", '#6D6E71')
-                .classed('bars', true);
-    
+                .attr("fill", "#6D6E71")
+                .classed("bars", true);
+
             // below bar
             this.ramo.append("rect")
                 .attr("x", posX)
                 .attr("y", posY + sizeY - graybar)
                 .attr("width", sizeX )
                 .attr("height", graybar)
-                .attr("fill", '#6D6E71')
-                .classed('bars', true);
-    
+                .attr("fill", "#6D6E71")
+                .classed("bars", true);
+
             // credits rect
             this.ramo.append("rect")
                 .attr("x", posX + sizeX  - 22 * scaleX)
                 .attr("y", posY + sizeY - graybar)
                 .attr("width", 20 * scaleX)
                 .attr("height", graybar)
-                .attr("fill", 'white');
-    
+                .attr("fill", "white");
+
             // texto créditos
             this.ramo.append("text")
                 .attr("x", posX + sizeX  - 22 * scaleX + 20 * scaleX / 2)
@@ -158,7 +158,7 @@ class Ramo {
                 if (isPlaceholder) return "#555555";
                 if (this.needsWhiteText(color))
                     return "white";
-                return '#222222';
+                return "#222222";
             })
             .attr("font-size", 13)
             .attr("text-anchor", "middle")
@@ -194,7 +194,7 @@ class Ramo {
                 .attr("dominant-baseline", "central")
                 .attr("text-anchor", "middle")
                 .attr("fill", "black")
-                .attr('font-size', 10)
+                .attr("font-size", 10)
                 .text(this.id);
         }
 
@@ -213,36 +213,36 @@ class Ramo {
                 variantY--;
             }
             // Use the same color as the prerequisite subject's category for visual connection
-            let prerSubject = this.malla.ALLSUBJECTS[p];
+            const prerSubject = this.malla.ALLSUBJECTS[p];
             if (!prerSubject) return; // Skip if prerequisite subject is not found
-            let prerColor = this.malla.categories[prerSubject.category][0]
+            const prerColor = this.malla.categories[prerSubject.category][0];
             this.ramo.append("circle")
-                .attr('cx', posX + r + c_x + variantX)
-                .attr('cy', posY + sizeY - graybar / 2)
-                .attr('r', r)
-                .attr('fill', prerColor)
-                .attr('stroke', 'white');
-            this.ramo.append('text')
-                .attr('x', posX + r + c_x + variantX)
-                .attr('y', posY + sizeY - graybar / 2)
+                .attr("cx", posX + r + c_x + variantX)
+                .attr("cy", posY + sizeY - graybar / 2)
+                .attr("r", r)
+                .attr("fill", prerColor)
+                .attr("stroke", "white");
+            this.ramo.append("text")
+                .attr("x", posX + r + c_x + variantX)
+                .attr("y", posY + sizeY - graybar / 2)
                 .text(prerSubject.id)
                 .attr("dominant-baseline", "central")
                 .attr("text-anchor", "middle")
                 .attr("font-size", fontsize)
                 .attr("dy", 0)
-                .attr('fill', () => {
+                .attr("fill", () => {
                     if (this.needsWhiteText(prerColor))
                         return "white";
-                    return '#222222';
+                    return "#222222";
                 });
             // Move position for next circle horizontally
             c_x += r * 2;
         });
-        
+
         if (!isPlaceholder) {
             this.createActionListeners();
         }
-        
+
         this.wrap(sizeX - 5, sizeY / 5 * 3);
     }
 
@@ -256,13 +256,13 @@ class Ramo {
             .attr("y", posY)
             .attr("width", sizeX)
             .attr("height", sizeY)
-            .attr("fill", 'white')
+            .attr("fill", "white")
             .attr("opacity", "0.001")
             .attr("class", "non-approved");
 
-        let cross = this.ramo.append('g').attr("class", "cross").attr("opacity", 0);
+        const cross = this.ramo.append("g").attr("class", "cross").attr("opacity", 0);
         cross.append("path")
-            .attr("d", "M" + posX + "," + posY + "L" + (posX + sizeX) + "," + (posY + sizeY))
+            .attr("d", `M${  posX  },${  posY  }L${  posX + sizeX  },${  posY + sizeY}`)
             .attr("stroke", "#550000")
             .attr("stroke-width", 9);
     }
@@ -290,15 +290,15 @@ class Ramo {
     approveRamo() {
         if (!this.approved) {
             if (!this.isCustom)
-                d3.select("#" + this.sigla).select(".cross").transition().delay(20).attr("opacity", "1");
-            this.malla.approveSubject(this)
-            this.ramo.attr("aria-pressed", "true")
+                d3.select(`#${  this.sigla}`).select(".cross").transition().delay(20).attr("opacity", "1");
+            this.malla.approveSubject(this);
+            this.ramo.attr("aria-pressed", "true");
         } else {
             if (!this.isCustom)
-                d3.select("#" + this.sigla).select(".cross").transition().delay(20).attr("opacity", "0.01");
-            this.malla.deApproveSubject(this)
-            this.ramo.attr("aria-pressed", "false")
-            }
+                d3.select(`#${  this.sigla}`).select(".cross").transition().delay(20).attr("opacity", "0.01");
+            this.malla.deApproveSubject(this);
+            this.ramo.attr("aria-pressed", "false");
+        }
         this.approved = !this.approved;
     }
 
@@ -306,7 +306,7 @@ class Ramo {
     cleanRamo() {
         // Se llama a metodos internos necesarios que "limpien" el ramo
         if (this.approved) {
-            this.approveRamo()
+            this.approveRamo();
         }
     }
 
@@ -319,7 +319,7 @@ class Ramo {
             _a.push(ramo.sigla);
         });
         _a = new Set(_a);
-        for (let r of this.prer) {
+        for (const r of this.prer) {
             if (!_a.has(r)) {
                 this.ramo.select(".non-approved").transition().delay(20).attr("opacity", "0.71");
                 return;
@@ -330,20 +330,20 @@ class Ramo {
 
     // función para encuadrar texto
     wrap(sizeX,sizeY) {
-        let text = this.ramo.select(".ramo-label");
+        const text = this.ramo.select(".ramo-label");
         // let emEquivalent = convertEm(1, text.node());
         let words = text.text().split(/\s+/).reverse(),
             word,
             line = [],
             lineNumber = 0,
             lineHeight = 1.1, // ems
-/*            y = text.attr("y"),
+            /*            y = text.attr("y"),
             dy = 0,*/
             fontsize = parseInt(text.attr("font-size"),10),
-            tspan = text.text(null).append("tspan").attr("x", text.attr("x")).attr("dominant-baseline", "central").attr("dy", 0 + "em"),
+            tspan = text.text(null).append("tspan").attr("x", text.attr("x")).attr("dominant-baseline", "central").attr("dy", `${0  }em`),
             textLines,
             textHeight;
-            word = words.pop();
+        word = words.pop();
         while (word) {
             line.push(word);
             tspan.text(line.join(" "));
@@ -356,12 +356,12 @@ class Ramo {
                     tspan.text(line.join(" "));
                     line = [word];
                     // console.log(lineNumber + 1, lineHeight, dy, (lineNumber + 1) * lineHeight + dy,((lineNumber + 1) * lineHeight + dy) + "em");
-                    tspan = text.append("tspan").attr("x", text.attr("x")).attr("dominant-baseline", "central").attr("dy",  lineHeight + "em").text(word);
+                    tspan = text.append("tspan").attr("x", text.attr("x")).attr("dominant-baseline", "central").attr("dy",  `${lineHeight  }em`).text(word);
                 }
             }
             word = words.pop();
         }
-        let texts = text.selectAll('tspan');
+        const texts = text.selectAll("tspan");
         text.attr("dy", 0); // forzar actualización de ems
 
         textLines = texts._groups[0].length;
@@ -376,8 +376,8 @@ class Ramo {
         }
 
         if (textLines !== 1) {
-            let firstTspan = texts.filter(function (d, i) { return i === 0 });
-            firstTspan.attr("dy", - (lineHeight * textLines / 2 - lineHeight / 2) + "em");
+            const firstTspan = texts.filter(function (d, i) { return i === 0; });
+            firstTspan.attr("dy", `${- (lineHeight * textLines / 2 - lineHeight / 2)  }em`);
         }
 
         text.attr("dy", 0); // forzar actualización de ems
@@ -415,8 +415,8 @@ class Ramo {
             g = parseInt(colorHex[3] + colorHex[4], 16);
             b = parseInt(colorHex[5] + colorHex[6], 16);
         }
-        
-        let yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+
+        const yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
         return yiq < 128;
     }
 

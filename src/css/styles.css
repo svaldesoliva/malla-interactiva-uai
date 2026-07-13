@@ -125,7 +125,7 @@ header {
 
 }
 
-sector:hover .text-white {
+.sector:hover .text-white {
     filter: brightness(85%);
 }
 
@@ -168,5 +168,15 @@ sector:hover .text-white {
 
     .overlay-content h3, .overlay-content h5 {
         opacity: .4;
+    }
+}
+
+#lastUpdate {
+    transition: color 0.2s ease-in-out;
+}
+
+@media(hover: hover) {
+    #lastUpdate.clickable:hover {
+        color: var(--bs-primary, #007bff) !important;
     }
 }

@@ -14,9 +14,9 @@ class Malla {
         this.longestSemester = 0;
         this.totalCredits = 0;
         this.totalSubjects = 0;
-        this.semesterManager = null
+        this.semesterManager = null;
         this.currentMalla = null;
-        this.generatedCode = []
+        this.generatedCode = [];
 
         // Propiedades despues del render
         this.APPROVED = [];
@@ -26,28 +26,27 @@ class Malla {
         this.saveEnabled = false;
         this.isMallaSet = false;
         this.showCreditSystem = false;
-        this.showCreditStats = false
+        this.showCreditStats = false;
 
         this.totalCredits = 0;
         this.totalSubjects = 0;
-
 
 
     }
 
     // Se explica solo
     enableCreditsStats() {
-        this.showCreditStats = true
+        this.showCreditStats = true;
     }
 
     // Se explica solo
     enableCreditsSystem() {
-        this.showCreditSystem = true
+        this.showCreditSystem = true;
     }
 
     // Habilita el guardado de ramos aprobados para futuras sesiones
     enableSave() {
-        this.saveEnabled = true
+        this.saveEnabled = true;
     }
 
     /**
@@ -61,77 +60,77 @@ class Malla {
     setCareer(carr, fullCareerName, relaPath, baseCarr = null) {
         // Check if there's a shared malla saved in localStorage (e.g., from URL sharing)
         if (localStorage["sharedMalla"] != undefined) {
-            let unparsedData = localStorage["sharedMalla"]
-            localStorage.removeItem("sharedMalla")
-            let data = JSON.parse(unparsedData)
+            const unparsedData = localStorage["sharedMalla"];
+            localStorage.removeItem("sharedMalla");
+            const data = JSON.parse(unparsedData);
             this.currentMalla = data.name;
-            this.fullCareerName = data.name
-            console.log("hola")
-            console.log(data.name)
-            return Promise.resolve(this.setMallaAndCategories(data.malla, data.categories))
+            this.fullCareerName = data.name;
+            console.log("hola");
+            console.log(data.name);
+            return Promise.resolve(this.setMallaAndCategories(data.malla, data.categories));
 
         } else {
             // Load from JSON files: data file contains subjects, colors file contains categories
             this.currentMalla = carr;
-            this.fullCareerName = fullCareerName
-            let promises = [];
-            
+            this.fullCareerName = fullCareerName;
+            const promises = [];
+
             if (baseCarr) {
-                promises.push(d3.json( relaPath + "data/" + baseCarr + "/data_" + baseCarr + ".json"));
-                promises.push(d3.json( relaPath + "data/" + baseCarr + "/colors_" + baseCarr + ".json"));
+                promises.push(d3.json( `${relaPath  }data/${  baseCarr  }/data_${  baseCarr  }.json`));
+                promises.push(d3.json( `${relaPath  }data/${  baseCarr  }/colors_${  baseCarr  }.json`));
             }
-    
-            promises.push(d3.json( relaPath + "data/" + this.currentMalla + "/data_" + this.currentMalla + ".json"));
-            promises.push(d3.json( relaPath + "data/" + this.currentMalla + "/colors_" + this.currentMalla + ".json"));
+
+            promises.push(d3.json( `${relaPath  }data/${  this.currentMalla  }/data_${  this.currentMalla  }.json`));
+            promises.push(d3.json( `${relaPath  }data/${  this.currentMalla  }/colors_${  this.currentMalla  }.json`));
             // Wait for both files to load, then initialize malla with the data
             return Promise.all(promises).then(values => {
                 if (baseCarr) {
-                    let baseData = values[0];
-                    let baseColors = values[1];
-                    let specificData = values[2];
-                    let specificColors = values[3];
-                    
-                    let mergedData = {};
-                    let allSemesters = new Set([...Object.keys(baseData), ...Object.keys(specificData)]);
-                    
+                    const baseData = values[0];
+                    const baseColors = values[1];
+                    const specificData = values[2];
+                    const specificColors = values[3];
+
+                    const mergedData = {};
+                    const allSemesters = new Set([...Object.keys(baseData), ...Object.keys(specificData)]);
+
                     allSemesters.forEach(sem => {
-                        let baseSem = baseData[sem] || [];
-                        let specSem = specificData[sem] || [];
-                        
+                        const baseSem = baseData[sem] || [];
+                        const specSem = specificData[sem] || [];
+
                         // Filter out ESP placeholders from base when merging with a specialty
-                        let mergedSem = baseSem.filter(c => c[3] !== "ESP");
+                        const mergedSem = baseSem.filter(c => c[3] !== "ESP");
                         specSem.forEach(specCourse => {
-                            let existingIdx = mergedSem.findIndex(c => c[1] === specCourse[1]);
+                            const existingIdx = mergedSem.findIndex(c => c[1] === specCourse[1]);
                             if (existingIdx !== -1) {
                                 mergedSem[existingIdx] = specCourse;
                             } else {
                                 mergedSem.push(specCourse);
                             }
                         });
-                        
+
                         // Order: CORE > Especialidad > Plan comun
                         mergedSem.sort((a, b) => {
-                            let catA = a[3];
-                            let catB = b[3];
-                            
-                            let getPriority = (cat) => {
+                            const catA = a[3];
+                            const catB = b[3];
+
+                            const getPriority = (cat) => {
                                 if (cat === "CORE") return 1;
                                 if (cat === "PC" || cat === "AC") return 3;
                                 return 2; // Specialty
                             };
-                            
+
                             return getPriority(catA) - getPriority(catB);
                         });
-                        
+
                         mergedData[sem] = mergedSem;
                     });
-                    
-                    let mergedColors = Object.assign({}, baseColors, specificColors);
+
+                    const mergedColors = Object.assign({}, baseColors, specificColors);
                     this.setMallaAndCategories(mergedData, mergedColors);
                 } else {
                     this.setMallaAndCategories(values[0], values[1]);
                 }
-            })
+            });
 
         }
     }
@@ -173,7 +172,7 @@ class Malla {
                 );
                 // Add subject to global subjects registry for easy lookup by code
                 this.ALLSUBJECTS[subject[1]] = this.malla[semester][subject[1]];
-                totalCredits += this.malla[semester][subject[1]].getDisplayCredits()
+                totalCredits += this.malla[semester][subject[1]].getDisplayCredits();
             });
         }
         this.longestSemester = longest_semester;
@@ -184,12 +183,12 @@ class Malla {
 
     // Define el controlador de semestres para que las asignaturas puedan acceder a el
     setSemesterManager(semesterManager) {
-        this.semesterManager = semesterManager
+        this.semesterManager = semesterManager;
     }
 
     // Agrega ramos a la malla
     addSubject(subject) {
-        this.ALLSUBJECTS[subject.sigla] = subject
+        this.ALLSUBJECTS[subject.sigla] = subject;
     }
 
     /**
@@ -200,11 +199,11 @@ class Malla {
         Object.values(this.ALLSUBJECTS).forEach(otherSubject => {
             // Remove this subject from the prerequisites list of any subjects that require it
             if (otherSubject.prer.has(subject.sigla)){
-                otherSubject.prer.delete(subject.sigla)
-                otherSubject.verifyPrer()
+                otherSubject.prer.delete(subject.sigla);
+                otherSubject.verifyPrer();
             }
-        })
-        delete this.ALLSUBJECTS[subject.sigla]
+        });
+        delete this.ALLSUBJECTS[subject.sigla];
     }
 
     // Renderiza la malla. canvasId puede ser una clase o una id
@@ -213,15 +212,15 @@ class Malla {
         if (!this.isMallaSet)
             return;
 
-        let separator = 10;
-        let semesterIndicatorHeight = 30 * this.scaleY;
+        const separator = 10;
+        const semesterIndicatorHeight = 30 * this.scaleY;
         // Se define el tamaño
-        let width = (this.subjectType.getDisplayWidth(this.scaleX) * Object.keys(this.malla).length) +
+        const width = (this.subjectType.getDisplayWidth(this.scaleX) * Object.keys(this.malla).length) +
             separator * (Object.keys(this.malla).length - 1);
-        let height = (this.subjectType.getDisplayHeight(this.scaleY) + separator) * this.longestSemester +
+        const height = (this.subjectType.getDisplayHeight(this.scaleY) + separator) * this.longestSemester +
             semesterIndicatorHeight * 2 + separator;
-        let canvasWidth = width + separator; // for full show svg
-        let canvasHeight = height + separator/2
+        const canvasWidth = width + separator; // for full show svg
+        const canvasHeight = height + separator/2;
 
         const canvas = d3.select(canvasId).append("svg")
             .attr("width", canvasWidth)
@@ -229,7 +228,7 @@ class Malla {
             .attr("role", "figure");
 
         canvas.append("title")
-            .text("Malla " + this.fullCareerName)
+            .text(`Malla ${  this.fullCareerName}`);
 
         const drawer = canvas;
         let globalX = separator / 2,
@@ -251,48 +250,48 @@ class Malla {
                     .attr("aria-level", "5")
                     .classed("year", true);
                 // se crea la barra en caso de semestre impar
-                let desc = yearIndicator.append("title")
+                const desc = yearIndicator.append("title");
                 // rectangulo de la barra
                 currentYearIndicator = yearIndicator.append("rect")
                     .attr("x", globalX)
                     .attr("y", globalY)
                     .attr("width", this.subjectType.getDisplayWidth(this.scaleX))
                     .attr("height", semesterIndicatorHeight)
-                    .attr("fill", 'gray')
-                    .classed('bars', true);
+                    .attr("fill", "gray")
+                    .classed("bars", true);
                 semestersPassed++;
                 // texto de la barra
                 currentYearIndicatorText = yearIndicator.append("text")
-                    .attr('x', globalX + this.subjectType.getDisplayWidth(this.scaleX) / 2.0)
-                    .attr('y', globalY + semesterIndicatorHeight / 2)
-                    .text("Año " + currentYear++ + " 1/2")
+                    .attr("x", globalX + this.subjectType.getDisplayWidth(this.scaleX) / 2.0)
+                    .attr("y", globalY + semesterIndicatorHeight / 2)
+                    .text(`Año ${  currentYear++  } 1/2`)
                     // .attr("font-family", "sans-serif")
                     .attr("font-weight", "bold")
                     .attr("fill", "white")
                     .attr("dominant-baseline", "central")
-                    .attr('text-anchor', 'middle');
-                desc.text("Año " + currentYear + " 1/2")
+                    .attr("text-anchor", "middle");
+                desc.text(`Año ${  currentYear  } 1/2`);
                 // Evento en caso de hacer click en el
                 yearIndicator.on("click", (event) => {
-                    let bar = d3.select(event.currentTarget)
-                    let number = parseInt(bar.select("text").text().substr(4));
+                    const bar = d3.select(event.currentTarget);
+                    const number = parseInt(bar.select("text").text().substr(4));
                     let ramosToSelect;
-                if (bar.node().getBBox().width <= this.subjectType.getDisplayWidth(this.scaleX) * 2 - this.subjectType.getDisplayWidth(this.scaleX) / 2) {
-                    d3.select("#sem" + (number * 2 + 1)).dispatch('click')
-                } else {
-                    d3.select("#sem" + number * 2).dispatch('click');
-                    d3.select("#sem" + (number * 2 - 1)).dispatch('click')
+                    if (bar.node().getBBox().width <= this.subjectType.getDisplayWidth(this.scaleX) * 2 - this.subjectType.getDisplayWidth(this.scaleX) / 2) {
+                        d3.select(`#sem${  number * 2 + 1}`).dispatch("click");
+                    } else {
+                        d3.select(`#sem${  number * 2}`).dispatch("click");
+                        d3.select(`#sem${  number * 2 - 1}`).dispatch("click");
 
-                }
+                    }
 
                 });
             } else {
                 // si es par, la actual se expande
                 currentYearIndicator.attr("width", this.subjectType.getDisplayWidth(this.scaleX) * 2 + separator);
-                currentYearIndicatorText.text("Año " + (currentYear));
+                currentYearIndicatorText.text(`Año ${  currentYear}`);
                 currentYearIndicatorText.attr("x", globalX - separator / 2);
                 semestersPassed = 0;
-                yearIndicator.select("title").text("Año "+ (currentYear))
+                yearIndicator.select("title").text(`Año ${ currentYear}`);
             }
 
             globalY += semesterIndicatorHeight + separator;
@@ -305,22 +304,22 @@ class Malla {
                     .attr("y", globalY)
                     .attr("width", width)
                     .attr("height", semesterIndicatorHeight)
-                    .attr("fill", '#EEE')
+                    .attr("fill", "#EEE")
                     .classed("sem", true);
                 isBigBarRendered = true;
             }
 
             // Pequeño seteo de variables en caso de que semestre sea "S1" o 1 por ejemplo
-            let intToRomanize = semester
+            let intToRomanize = semester;
             if (intToRomanize[0] === "s") {
-                intToRomanize = parseInt(intToRomanize.substr(1))
+                intToRomanize = parseInt(intToRomanize.substr(1));
             } else {
-                intToRomanize = parseInt(intToRomanize)
+                intToRomanize = parseInt(intToRomanize);
             }
 
             // barra de semestres individuales
-            let semesterIndicator = drawer.append("g")
-                .attr("id", "sem" + intToRomanize)
+            const semesterIndicator = drawer.append("g")
+                .attr("id", `sem${  intToRomanize}`)
                 .attr("cursor", "pointer")
                 .attr("width", this.subjectType.getDisplayWidth(this.scaleX))
                 .attr("height", semesterIndicatorHeight)
@@ -328,8 +327,7 @@ class Malla {
                 .attr("aria-level", "6")
                 .classed("sem", true);
 
-            semesterIndicator.append("title").text("Semestre " + intToRomanize)
-
+            semesterIndicator.append("title").text(`Semestre ${  intToRomanize}`);
 
 
             semesterIndicator.append("rect")
@@ -339,23 +337,23 @@ class Malla {
                 .attr("width", this.subjectType.getDisplayWidth(this.scaleX))
                 .attr("height", semesterIndicatorHeight)
                 .classed("sem", true)
-                .attr("fill", '#EEE');
+                .attr("fill", "#EEE");
 
 
             semesterIndicator.append("text")
-                .attr('x', globalX + this.subjectType.getDisplayWidth(this.scaleX) / 2.0)
-                .attr('y', globalY + semesterIndicatorHeight / 2)
+                .attr("x", globalX + this.subjectType.getDisplayWidth(this.scaleX) / 2.0)
+                .attr("y", globalY + semesterIndicatorHeight / 2)
                 .text(this.romanize(intToRomanize))
                 .attr("dominant-baseline", "central")
-                .attr('text-anchor', 'middle');
+                .attr("text-anchor", "middle");
             // evento en caso de clickear la barra del semestre
             semesterIndicator.on("click", (event) => {
                 let semNumber = intToRomanize;
                 if (semester[0] === "s")
-                    semNumber = "s" + semNumber
+                    semNumber = `s${  semNumber}`;
                 Object.values(this.malla[semNumber]).forEach(ramo => {
-                    ramo.isBeingClicked()
-                })
+                    ramo.isBeingClicked();
+                });
 
             });
 
@@ -365,11 +363,11 @@ class Malla {
             Object.keys(this.malla[semester]).forEach(subject => {
                 this.malla[semester][subject].draw(drawer, globalX, globalY, this.scaleX, this.scaleY);
                 globalY += this.subjectType.getDisplayHeight(this.scaleY) + separator;
-            })
+            });
 
 
             globalX += this.subjectType.getDisplayWidth(this.scaleX) + separator;
-        })
+        });
     }
 
     // Renderiza las descripciones de las categorías
@@ -377,10 +375,10 @@ class Malla {
         Object.keys(this.categories).forEach(key => {
             // Skip ESP placeholder category from legend
             if (key === "ESP") return;
-            
-            let color_description = d3.select(".color-description").append("div")
+
+            const color_description = d3.select(".color-description").append("div")
                 .attr("style", "display:flex;vertical-align:middle;margin-right:15px;");
-            let circle_color = color_description.append("svg")
+            const circle_color = color_description.append("svg")
                 .attr("height", "25px")
                 .attr("width", "25px");
             circle_color.append("circle")
@@ -397,7 +395,7 @@ class Malla {
     // Permite que se revise si los ramos cumplen prerrequisitos
     enablePrerCheck() {
         this.checkPrer = true;
-        this.verifyPrer()
+        this.verifyPrer();
     }
 
     // Revisa que ramos cumplen prerrequisitos y "oculta" los que no los cumplen
@@ -406,69 +404,69 @@ class Malla {
             Object.values(this.ALLSUBJECTS).forEach(ramo => {
                 ramo.verifyPrer();
             });
-            this.saveApproved()
+            this.saveApproved();
         }
     }
 
     // Retorna el sistema de créditos utilizado
     displayCreditSystem() {
         if (!this.showCreditSystem)
-            return
-        d3.select("#credits-system").text('SCT')
+            return;
+        d3.select("#credits-system").text("SCT");
     }
 
     // Actualiza los datos como porcentaje de ramos aprobados etc
     updateStats() {
         if (!this.showCreditStats)
-            return
+            return;
         let currentCredits = 0;
         let currentRamos = 0;
         this.APPROVED.forEach(ramo => {
             currentCredits += ramo.getDisplayCredits();
-            currentRamos += 1
-        })
-        let creditPercentage = currentCredits/this.totalCredits * 100;
-        let careerAdvance = currentRamos/this.totalSubjects * 100;
-        d3.select("#credits").text(parseInt(currentCredits))
-        d3.select("#credPercentage").text(parseInt(creditPercentage))
-        d3.select("#ramoPercentage").text(parseInt(careerAdvance))
+            currentRamos += 1;
+        });
+        const creditPercentage = currentCredits/this.totalCredits * 100;
+        const careerAdvance = currentRamos/this.totalSubjects * 100;
+        d3.select("#credits").text(parseInt(currentCredits));
+        d3.select("#credPercentage").text(parseInt(creditPercentage));
+        d3.select("#ramoPercentage").text(parseInt(careerAdvance));
     }
 
     // Limpia los ramos aprobados
     cleanSubjects() {
-        let listToClean = [...this.APPROVED]
+        const listToClean = [...this.APPROVED];
         listToClean.forEach(ramo => {
-            ramo.cleanRamo()
-        })
-        this.verifyPrer()
-        this.updateStats()
+            ramo.cleanRamo();
+        });
+        this.verifyPrer();
+        this.updateStats();
     }
 
 
     // Auto explanatorio
     approveSubject(subject) {
-        this.APPROVED.push(subject)
+        this.APPROVED.push(subject);
     }
 
     // Auto explanatorio
     deApproveSubject(subject) {
-        let _i = this.APPROVED.indexOf(subject);
+        const _i = this.APPROVED.indexOf(subject);
         if (_i > -1) {
             this.APPROVED.splice(_i, 1);
         }
     }
 
     getSubject(sigla) {
-        return this.ALLSUBJECTS[sigla]
+        return this.ALLSUBJECTS[sigla];
     }
 
     // Auto explanatorio
     saveApproved() {
         if (this.saveEnabled) {
-            let cacheName = "approvedRamos_" + this.currentMalla;
-            let cacheToSave = [];
+            const cacheName = `approvedRamos_${  this.currentMalla}`;
+            const cacheToSave = [];
             this.APPROVED.forEach(ramo => {
-                cacheToSave.push(ramo.sigla)
+                cacheToSave.push(ramo.sigla);
             });
             localStorage[cacheName] = JSON.stringify(cacheToSave);
         }
@@ -477,14 +475,14 @@ class Malla {
     // Auto explanatorio
     loadApproved() {
         if (this.saveEnabled) {
-            let cache = localStorage["approvedRamos_" + this.currentMalla]
+            const cache = localStorage[`approvedRamos_${  this.currentMalla}`];
             if (cache) {
-                let loadedData = JSON.parse(cache)
+                const loadedData = JSON.parse(cache);
                 loadedData.forEach(siglaRamo => {
                     if (this.ALLSUBJECTS[siglaRamo] !== undefined)
-                        this.ALLSUBJECTS[siglaRamo].approveRamo()
-                })
-                this.verifyPrer()
+                        this.ALLSUBJECTS[siglaRamo].approveRamo();
+                });
+                this.verifyPrer();
             }
         }
     }
@@ -492,7 +490,7 @@ class Malla {
     // EXTRA
 
     romanize(arabic) {
-        let r_nums = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX"];
+        const r_nums = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX"];
         return r_nums[arabic] || arabic.toString();
     }
 
