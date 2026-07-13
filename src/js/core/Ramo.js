@@ -213,7 +213,9 @@ class Ramo {
                 variantY--;
             }
             // Use the same color as the prerequisite subject's category for visual connection
-            let prerColor = this.malla.categories[this.malla.ALLSUBJECTS[p].category][0]
+            let prerSubject = this.malla.ALLSUBJECTS[p];
+            if (!prerSubject) return; // Skip if prerequisite subject is not found
+            let prerColor = this.malla.categories[prerSubject.category][0]
             this.ramo.append("circle")
                 .attr('cx', posX + r + c_x + variantX)
                 .attr('cy', posY + sizeY - graybar / 2)
@@ -223,7 +225,7 @@ class Ramo {
             this.ramo.append('text')
                 .attr('x', posX + r + c_x + variantX)
                 .attr('y', posY + sizeY - graybar / 2)
-                .text(this.malla.ALLSUBJECTS[p].id)
+                .text(prerSubject.id)
                 .attr("dominant-baseline", "central")
                 .attr("text-anchor", "middle")
                 .attr("font-size", fontsize)
